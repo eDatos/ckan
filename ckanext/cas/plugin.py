@@ -47,6 +47,7 @@ class CASClientPlugin(p.SingletonPlugin):
     CAS_APP_URL = None
     REDIRECT_ON_UNSUCCESSFUL_LOGIN = None
     VERIFY_CERTIFICATE = True
+    CAS_ROOT_PATH = None
 
     def configure(self, config_):
         # Setup database tables
@@ -109,6 +110,7 @@ class CASClientPlugin(p.SingletonPlugin):
             'ckanext.cas.login_checkup_cookie', 'cas_login_check')
         self.VERIFY_CERTIFICATE = t.asbool(
             config.get('ckanext.cas.verify_certificate', True))
+        self.CAS_ROOT_PATH = config.get('ckanext.cas.root_path', None)
 
     # IConfigurer
 
@@ -139,8 +141,16 @@ class CASClientPlugin(p.SingletonPlugin):
         remote_user = environ.get('REMOTE_USER', None)
         if remote_user and not is_ticket_valid(remote_user):
             log.debug('User logged out of CAS Server')
-            url = h.url_for(controller='user', action='logged_out_page',
-                            __ckan_no_root=True)
+            if(self.CAS_ROOT_PATH is not None):
+                url = h.url_for(controller='user', action='logged_out_page')
+                logout_path = getattr(t.request.environ['repoze.who.plugins']['friendlyform'],
+                                      'logout_handler_path')
+                h.redirect_to('{root_path}{logout_path}?came_from={url}'
+                              .format(root_path=self.CAS_ROOT_PATH,
+                                      logout_path=logout_path,
+                                      url=url
+                                      ))
+            url = h.url_for(controller='user', action='logged_out_page')
             h.redirect_to(getattr(t.request.environ['repoze.who.plugins']['friendlyform'],
                                   'logout_handler_path') + '?came_from=' + url)
         elif not remote_user and not isinstance(environ['pylons.controller'], CASController) \
@@ -187,7 +197,6 @@ class CASClientPlugin(p.SingletonPlugin):
                 '?service=' + self.CAS_APP_URL + '/cas/logout'
             redirect(cas_logout_url)
         # TODO: Refactor into helper
-        url = h.url_for(controller='user', action='logged_out_page',
-                        __ckan_no_root=True)
+        url = h.url_for(controller='user', action='logged_out_page')
         h.redirect_to(getattr(t.request.environ['repoze.who.plugins']['friendlyform'],
                               'logout_handler_path') + '?came_from=' + url)

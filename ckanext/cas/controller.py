@@ -214,14 +214,14 @@ class CASController(UserController):
         log.debug('Invoked "cas_callback" method.')
         cas_plugin = p.get_plugin('cas')
         if t.request.method.lower() == 'get':
-            next_url = t.request.params.get('next', '/')
+            next_url = t.request.params.get('next', cas_plugin.CAS_APP_URL)
             ticket = t.request.params.get(cas_plugin.TICKET_KEY)
             if not ticket:
                 t.response.set_cookie(cas_plugin.LOGIN_CHECKUP_COOKIE, str(time.time()),
                                       max_age=cas_plugin.LOGIN_CHECKUP_TIME)
                 log.debug('(NOT TICKET) REDIRECTING TO ' +
-                          cas_plugin.CAS_APP_URL + next_url)
-                redirect(cas_plugin.CAS_APP_URL + next_url)
+                          cas_plugin.CAS_APP_URL)
+                redirect(cas_plugin.CAS_APP_URL)
 
             # log.debug('Validating ticket: {0}'.format(ticket))
             q = rq.get(cas_plugin.SERVICE_VALIDATION_URL,
