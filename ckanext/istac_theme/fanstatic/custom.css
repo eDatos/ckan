@@ -1,0 +1,181 @@
+ 
+.masthead {
+ 	background-color: #008BD0 !important;
+	background-image: none;
+}
+
+.homepage .module-search .module-content,
+.tags {
+	background-color: #008bd0 !important;
+	opacity: 0.80;
+}
+
+.homepage .module-search,
+.box {
+	background-color: none !important;
+	background: none !important;
+}
+
+.account-masthead {
+	background-color: #ffffff !important;
+	background-image: none;
+}
+
+.site-footer {
+        background-color: #59656e !important;
+	background-image: none;
+}
+
+
+.footer-title {
+    	text-transform: uppercase;
+    	font-weight: bold;
+    	font-size: 1.1em;
+}
+
+.attrib {
+	font-size: .8em;
+	margin-top:1rem;
+}
+
+.fleft {
+	float:left;
+}
+
+.fright {
+	float: right;
+}
+
+a.logo img {
+	height: 50px;
+	padding: 10px 36px 10px 36px;
+}
+
+.hero {
+	background-image: none;
+}
+
+body {
+	background-image: url("/aplicaciones/catalogoistac/mapa_actual.png");
+	background-color: #eeeeee !important;
+	//background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+
+}
+
+.masthead .navigation .nav-pills li a,
+.masthead .navigation .nav-pills li.active a {
+	background-color: #008bd0;
+	color: #ffffff;
+}
+
+.masthead .navigation .nav-pills li a:hover,
+.masthead .navigation .nav-pills li.active a {
+	background-color: #008bd0;
+	color: #ffffff;
+}
+
+.account-masthead .account ul li a {
+	display: block;
+	color: #333333;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 0 10px;
+	line-height: 31px;
+}
+
+
+.account-masthead .account ul li a:hover {
+	color: #ffffff;
+	background-color: #008bd0;
+	text-decoration: none;
+}
+
+a.tag:hover {
+	color: #fff;
+	background-color: #004568;
+ 	border: 0px;
+	-webkit-box-shadow: inset 0 1px 0 #3d97b3;
+	-moz-box-shadow: inset 0 1px 0 #3d97b3;
+	box-shadow: inset 0 1px 0 #3d97b3;
+}
+
+.site-footer,
+.site-footer label,
+.site-footer small,
+.site-footer a {
+  color: #ffffff;
+}
+
+
+.btn-primary {
+	background-image: none;
+	background-color: #008BD0;
+	color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+	color: #ffffff;
+	background-color: #005980;
+}
+
+.homepage .module-search {
+	margin: 150px 0;
+}
+
+.search-form .search-input.search-giant button {
+	margin-top: -13px;
+}
+
+.account-masthead .account ul li{
+	border-left: 1px solid #dddddd;
+}
+
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+	width: auto;
+}
+
+[role=main] {
+	background: none;
+}
+
+.nav-item.active > a, .nav-aside li.active a,
+.account-masthead .account ul li a.btn-datasets {
+	background-color: #008bd0;
+	color: #FFFFFF;	
+}
+
+
+.account-masthead .account ul li a.btn-datasets:hover, 
+.account-masthead .account ul li.active a.btn-datasets {
+	background-color: #005980;
+	color: #FFFFFF;	
+}
+
+.resource-item:hover {
+	background-color: transparent;
+}
+
+.nav-item.active > a::before, .nav-aside li.active a::before {
+	content: ' ';
+	position: absolute;
+	top: 0;
+	right: -10px;
+	width: 0;
+	height: 0;
+	border-top: 17px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 10px solid #008bd0;
+	background-image: none;
+}
+
+.nav-item.active > a:hover, .nav-aside li.active a:hover {
+    	color: #ffffff;
+	background-color: #008bd0;
+}
