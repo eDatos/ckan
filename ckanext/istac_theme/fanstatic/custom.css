@@ -2,6 +2,7 @@
 .masthead {
  	background-color: #008BD0 !important;
 	background-image: none;
+	min-height: 54px;
 }
 
 .homepage .module-search .module-content,
@@ -19,6 +20,7 @@
 .account-masthead {
 	background-color: #ffffff !important;
 	background-image: none;
+	border-bottom: 2px solid #59656e;
 }
 
 .site-footer {
@@ -61,6 +63,8 @@ body {
 	//background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
+	padding: 0px !important;
+	font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
 
 }
 
@@ -76,11 +80,12 @@ body {
 	color: #ffffff;
 }
 
+.home-app,
 .account-masthead .account ul li a {
 	display: block;
-	color: #333333;
-	font-size: 13px;
-	font-weight: bold;
+	color: #59656e;
+	font-size: 16px;
+	font-weight: initial;
 	padding: 0 10px;
 	line-height: 31px;
 }
@@ -141,8 +146,11 @@ a.tag:hover {
 	width: auto;
 }
 
-[role=main] {
+[role=main], .main {
 	background: none;
+	background-color: #bbc8d0;
+	padding-bottom: 80px;
+	min-height: 700px;
 }
 
 .nav-item.active > a, .nav-aside li.active a,
@@ -178,4 +186,29 @@ a.tag:hover {
 .nav-item.active > a:hover, .nav-aside li.active a:hover {
     	color: #ffffff;
 	background-color: #008bd0;
+}
+
+.home-app{
+	font-size: 20px;
+	font-weight: 500;
+	color: #59656e !important;
+	padding-top: 10px;
+	padding-left: 36px;
+}
+	
+.title-icon {
+border-radius: 50%;
+border: 1px solid;
+	border-top-color: currentcolor;
+	border-right-color: currentcolor;
+	border-bottom-color: currentcolor;
+	border-left-color: currentcolor;
+	border-color: inherit;
+	font-size: 17px;
+	width: 20px;
+	height: 20px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 2px;
 }

@@ -69,7 +69,9 @@
     #}
     {%- block styles %}
       {% resource g.main_css[6:] %}
-	{% resource 'istac_theme/custom.css'   %}
+	{% resource 'istac_theme/custom.css' %}
+	{% resource 'istac_theme/subject-area-icons.css' %}
+	{% resource 'istac_theme/fonts/subject-area-icons/css/Glyphter.css' %}
     {% endblock %}
 
     {% block head_extras %}
