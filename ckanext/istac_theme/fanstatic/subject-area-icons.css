@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
 }
+.subject-area-icon.group-home-icon{
+    font-size: 50px !important;
+}
 .subject-area-icon:before{
 	display: inline-block;
     font-family: 'Glyphter';

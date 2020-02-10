@@ -7,9 +7,7 @@
   {% endblock %}
   <div class="container">
     <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
-      <span class="fa-bar"></span>
-      <span class="fa-bar"></span>
-      <span class="fa-bar"></span>
+      <span class="fa fa-bars"></span>
     </button>
     {# The .header-image class hides the main text and uses image replacement for the title #}
     <hgroup class="{{ g.header_class }} pull-left">
@@ -27,6 +25,25 @@
 
     </hgroup>
 
+    <hgroup class="{{ g.header_class }} pull-right">
+
+	<header class="inicio-masthead">
+		<nav class="">
+	         <div class="">
+		  <ul class="">
+		    {% block header_option_s %}
+			<li>
+			  <a class="" href="http://www.gobiernodecanarias.org/istac/">
+				<span>INICIO</span>
+			  </a>
+			</li>
+		    {% endblock %}
+		  </ul>
+	    	 </div>
+		</nav>
+	</header>
+
+    </hgroup>
   </div>
 </header>
 {% block header_account %}
@@ -39,7 +56,8 @@
             <span class="title-icon">
               <i class="fa fa-home" aria-hidden="true"></i>
             </span>
-     	    Portal de datos abiertos del ISTAC</a>
+	      {{ g.site_title  }}
+     	    </a>
 	  {% endblock %}
 	<nav class="navigation">
           <div class="nav-collapse collapse account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
@@ -102,7 +120,15 @@
 	</nav>
         {% else %}
 	    {% block header_home_navigation %}
-		<a class="home-app pull-left" href="{{ h.url_for('home') }}">Portal de datos abiertos del ISTAC</a>
+
+	      <a class="home-app pull-left" href="{{ h.url_for('home') }}">
+                <span class="title-icon">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                </span>
+	          {{ g.site_title  }}
+     	      </a>
+
+
 	    {% endblock %}
 	      {% block header_site_navigation %}
 		<nav class="navigation">

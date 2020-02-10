@@ -15,6 +15,7 @@
 .box {
 	background-color: none !important;
 	background: none !important;
+	margin-bottom: 20px;
 }
 
 .account-masthead {
@@ -106,6 +107,11 @@ a.tag:hover {
 	box-shadow: inset 0 1px 0 #3d97b3;
 }
 
+a:hover,
+a:focus {
+	text-decoration: none;
+}
+
 .site-footer,
 .site-footer label,
 .site-footer small,
@@ -131,7 +137,7 @@ a.tag:hover {
 }
 
 .homepage .module-search {
-	margin: 150px 0;
+	margin: 150px 0 20px 0;
 }
 
 .search-form .search-input.search-giant button {
@@ -197,8 +203,8 @@ a.tag:hover {
 }
 	
 .title-icon {
-border-radius: 50%;
-border: 1px solid;
+	border-radius: 50%;
+	border: 1px solid;
 	border-top-color: currentcolor;
 	border-right-color: currentcolor;
 	border-bottom-color: currentcolor;
@@ -211,4 +217,71 @@ border: 1px solid;
 	justify-content: center;
 	align-items: center;
 	margin-right: 2px;
+}
+
+.media-heading {
+	text-align: center;
+}
+
+.image a:hover{
+	text-decoration: none;
+}
+
+.inicio-masthead {
+	padding-top: 24px;
+	margin-right: 56px;
+}
+
+
+.inicio-masthead li{
+	list-style: none;
+}
+
+.inicio-masthead a {
+	border: 1px solid #8cd2ea;
+	padding: 2px;
+	font-size: 17px;
+}
+
+.inicio-masthead a>span {
+	opacity: 0.5;
+}
+
+.inicio-masthead a>span:hover {
+	opacity: 1;
+}
+
+.masthead .nav-collapse {
+    margin-right: 36px;
+}
+
+.media-item.group-home-item {
+	position: relative;
+	float: left;
+	width: 56px;
+	padding: 20px 12px;
+	margin: 2px;
+	background-color: white;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	height: 70px;
+	list-style: none;
+	margin-left: 3px;
+}
+
+.media-item h3 {
+	font-size: 10px;
+}
+
+.media-grid {
+	margin: 0px !important;
+	padding-bottom: 0px;
+	background: none !important;
+	background-color: #FFFFFF !important;
+}
+
+.count-all-datasets h1{
+	text-align: center;
+	color: #59656e;
 }
