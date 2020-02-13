@@ -20,10 +20,10 @@ Example:
     <span class="subject-area-icon group-home-icon {{ group.name}}"></span>
   {% endblock %}
   {% block title %}
-    <h3 class="media-heading">{{ h.get_translated(group, 'title') | truncate(25)   or group.display_name | truncate(25) }}</h3>
+    <h3 class="media-heading">{{ h.get_translated(group, 'title') or group.display_name }}</h3>
   {% endblock %}
   {% block link %}
-    <a href="{{ url }}" title="{{ _('View {name}').format(name=h.get_translated(group, 'title') or group.display_name) }}" class="media-view">
+    <a href="{{ url }}" title="{{ _('View {name}').format(name=h.get_translated(group, 'title') or group.display_name) }}" class="media-view no-border">
       <span>{{ _('View {name}').format(name=h.get_translated(group, 'title') or group.display_name) }}</span>
     </a>
   {% endblock %}

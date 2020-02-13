@@ -1,5 +1,6 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import os
 from ckan.lib.plugins import DefaultTranslation
 
 
@@ -8,7 +9,7 @@ def get_all_groups():
 
     '''
     groups = toolkit.get_action('group_list')(
-        data_dict={'sort': 'package_count desc', 'all_fields': True})
+        data_dict={'all_fields': True})
 
     return groups
 
@@ -16,10 +17,10 @@ def get_all_groups():
 def get_count_all_datasets():
     '''Returns the total number or datasets
     '''
-    package_list = toolkit.get_action('package_list')(
+    package_list = toolkit.get_action('package_search')(
         data_dict={
         })
-    count = len(package_list)
+    count = package_list.get('count')
 
     return count
 

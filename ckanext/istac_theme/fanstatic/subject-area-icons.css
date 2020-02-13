@@ -5,7 +5,7 @@
     justify-content: center;
 }
 .subject-area-icon.group-home-icon{
-    font-size: 50px !important;
+    font-size: 75px !important;
 }
 .subject-area-icon:before{
 	display: inline-block;
@@ -23,7 +23,7 @@
 .ciencia-y-tecnologia:before {content: '\0058'; color: #8C9BA3;}
 .icon-Demo_MovimientoNatural:before {content: '\0051'}
 .icon-Demo_MovimientosMigratorios:before {content: '\0052'}
-.demografia:before {content: '\0053'}
+.demografia:before {content: '\0053'; color:#8C5C1D}
 .hacienda:before {content: '\0046'; color:#E5772D;}
 .urbanismo-infraestructuras:before {content: '\0044'; color:#E5772D;}
 .icon-Economia_Precios_ConsumoEInversion:before {content: '\0045'}
@@ -31,14 +31,14 @@
 .medio-rural-pesca:before {content: '\0041'; color:#E5772D;}
 .vivienda:before {content: '\0066'; color:#E5772D;}
 .energia:before {content: '\0067'; color:#E5772D;}
-.industria:before {content: '\0067'; color:#E5772D;}
+.industria:before {content: '\0068'; color:#E5772D;}
 .comercio:before {content: '\0064'; color:#E5772D;}
 .deporte:before {content: '\004c'; color:#7F5B97;}
 .turismo:before {content: '\0062'; color:#E5772D;}
 .economia:before {content: '\005a'; color:#E5772D;}
 .transporte:before {content: '\0061'; color:#E5772D;}
 .sociedad-bienestar:before {content: '\004f'; color:#7F5B97;}
-.cultura-ocio:before {content: '\004c'; color:#7F5B97;}
+.cultura-ocio:before {content: '\0069'; color:#7F5B97;}
 .educacion:before {content: '\004d'; color:#7F5B97;}
 .icon-Sociedad_EleccionesYParticipacionCiudadana:before {content: '\004b'}
 .legislacion-justicia:before {content: '\004a'; color:#7F5B97;}

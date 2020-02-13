@@ -18,6 +18,10 @@
 	margin-bottom: 20px;
 }
 
+.counter-box{
+	padding-bottom: 80px;
+}
+
 .account-masthead {
 	background-color: #ffffff !important;
 	background-image: none;
@@ -59,7 +63,7 @@ a.logo img {
 }
 
 body {
-	background-image: url("/aplicaciones/catalogoistac/mapa_actual.png");
+	background-image: url("/aplicaciones/catalogoistac/fondo_portal_datos_abiertos.jpg");
 	background-color: #eeeeee !important;
 	//background-repeat: no-repeat;
 	background-size: cover;
@@ -137,7 +141,7 @@ a:focus {
 }
 
 .homepage .module-search {
-	margin: 150px 0 20px 0;
+	margin: 100px 0 20px 0;
 }
 
 .search-form .search-input.search-giant button {
@@ -258,30 +262,49 @@ a:focus {
 .media-item.group-home-item {
 	position: relative;
 	float: left;
-	width: 56px;
-	padding: 20px 12px;
-	margin: 2px;
-	background-color: white;
+	width: 120px;
+	padding: 5px 0px 5px 0px;
+	margin: 6px 0px 6px 0px;
+	background: none;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	height: 70px;
+	height: auto;
 	list-style: none;
-	margin-left: 3px;
 }
 
 .media-item h3 {
-	font-size: 10px;
+	font-size: 15px;
+	font-weight: normal;
+ 	hyphens: unset;
 }
 
 .media-grid {
 	margin: 0px !important;
-	padding-bottom: 0px;
+	padding: 12px 0px;
 	background: none !important;
-	background-color: #FFFFFF !important;
+	background-color:rgb(255,255,255, 0.7) !important;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
 }
 
 .count-all-datasets h1{
 	text-align: center;
 	color: #59656e;
+	margin: 0px;
+}
+
+.media-view.no-border{
+	border: none !important;
+}
+
+@media only screen and (min-width: 1399px) {
+	.container {
+		width: 1400px;
+	}
+
+	.span9 {
+		width: 1170px;
+	}
 }
