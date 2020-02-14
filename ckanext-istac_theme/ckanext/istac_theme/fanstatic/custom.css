@@ -165,14 +165,14 @@ a:focus {
 
 .nav-item.active > a, .nav-aside li.active a,
 .account-masthead .account ul li a.btn-datasets {
-	background-color: #008bd0;
+	background-color: #bbc8d0;
 	color: #FFFFFF;	
 }
 
 
 .account-masthead .account ul li a.btn-datasets:hover, 
 .account-masthead .account ul li.active a.btn-datasets {
-	background-color: #005980;
+	background-color: #008bd0;
 	color: #FFFFFF;	
 }
 
