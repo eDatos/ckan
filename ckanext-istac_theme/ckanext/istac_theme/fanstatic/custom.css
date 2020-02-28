@@ -308,3 +308,20 @@ a:focus {
 		width: 1170px;
 	}
 }
+
+
+.context-info .nums {
+	display:flex;
+	align-items:center;
+	text-align:center;
+	justify-content:center;
+}
+
+@media only screen and (max-width: 767px) {
+	[class*="span"],
+ 	.uneditable-input[class*="span"],
+	.row-fluid [class*="span"] {
+		float:left;
+	}
+}
+
