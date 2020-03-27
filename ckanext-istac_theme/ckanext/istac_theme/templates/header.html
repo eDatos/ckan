@@ -14,7 +14,8 @@
 
       {% block header_logo %}
         {% if g.site_logo %}
-          <a class="logo" href="http://www.gobiernodecanarias.org/istac/"><img src="{{ g.site_logo }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" /></a>
+          <a class="logo hidden-lg-down" href="http://www.gobiernodecanarias.org/istac/"><img src="/aplicaciones/catalogoistac/istac_logo.png" alt="{{ g.site_title }}" title="{{ g.site_title }}" /></a>
+          <a class="logo hidden-xl-up" href="http://www.gobiernodecanarias.org/istac/"><img class="logo-corto" src="/aplicaciones/catalogoistac/istac_logo_corto.png" alt="{{ g.site_title }}" title="{{ g.site_title }}" /></a>
         {% else %}
           <h1>
             <a href="{{ h.url_for('home') }}">{{ g.site_title }}</a>
