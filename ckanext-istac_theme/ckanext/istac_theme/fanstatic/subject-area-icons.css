@@ -1,7 +1,7 @@
 .subject-area-icon {
     font-size: 94px;
     text-align: center;
-    display: flex;
+    display: block;
     justify-content: center;
 }
 .subject-area-icon.group-home-icon{
