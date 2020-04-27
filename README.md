@@ -9,6 +9,7 @@ Este repositorio contiene el código fuente de las extensiones del proyecto CKAN
 
 Se han esarrollado las siguientes extensiones de CKAN:
 
+- ckanext-cas: contiene el código de la extensión modificado para funcionar con el CAS de Gobierno de Canarias y modificado para funcionar en una ruta distinta a raíz.
 - ckanext-istac_theme: contiene el código de la extensión creada para modificar los estilos del CKAN
 - fichero ckan-license.json: contiene las licencias necesarias para realizar el mapeado en el ckan en los procesos de federación.
 
