@@ -182,7 +182,7 @@ a:focus {
 }
 
 .resource-item:hover {
-	background-color: transparent;
+	background-color: #eeeeee;
 }
 
 .nav-item.active > a::before, .nav-aside li.active a::before {
@@ -391,4 +391,16 @@ div.input-prepend input:nth-child(2) {
 .btn.btn-navbar {
 	background-color: transparent !important;
 	font-size: 21px;
+}
+
+#dataset-resources li.resource-item {
+	display: flex !important;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+
+#dataset-resources li.resource-item .btn-group {
+	position: inherit;
+	top: 0px;
+	right: 0px;
 }
