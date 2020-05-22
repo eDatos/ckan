@@ -38,6 +38,8 @@ abort = base.abort
 CAS_NAMESPACE = 'urn:oasis:names:tc:SAML:2.0:protocol'
 XML_NAMESPACES = {'samlp': CAS_NAMESPACE}
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+ADMIN = 'adminIstacOpenData'
+MEMBER = 'memberIstacOpenData'
 
 
 class CASController(UserController):
@@ -158,17 +160,15 @@ class CASController(UserController):
             abort(405, msg)
 
     def _authenticate_user(self, username, email, fullname, is_superuser=False):
-        # if not is_superuser or is_superuser == 'False':
-        #     log.debug("No es super user")
-        #     abort(500, "Usted no tiene permisos como administrador")
-        #     return False
-
         user = m.User.get(username)
 
-        if not is_superuser or is_superuser == 'False':
+        if is_superuser and is_superuser == ADMIN:
+            is_superuser = True
+        elif is_superuser and is_superuser == MEMBER:
             is_superuser = False
         else:
-            is_superuser = True
+            abort(
+                403, 'Solo se pueden autenticar los usuarios pertenecientes al equipo del ISTAC')
 
         if user is None:
             data_dict = {'name': unicode(username),
@@ -229,6 +229,17 @@ class CASController(UserController):
                                cas_plugin.SERVICE_KEY: cas_plugin.CAS_APP_URL + '/cas/callback'}, verify=cas_plugin.VERIFY_CERTIFICATE)
             log.debug(b'' + q.content)
             root = objectify.fromstring(b'' + q.content)
+            isMemberOf = None
+            if hasattr(root.authenticationSuccess.attributes, 'isMemberOf'):
+                log.debug('Cantidad de isMemberOf :')
+                log.debug(
+                    len(list(root.authenticationSuccess.attributes.isMemberOf)))
+                for attr in root.authenticationSuccess.attributes.isMemberOf:
+                    log.debug(attr)
+                    if (attr.find('IstacOpenData') != -1):
+                        isMemberOf = attr
+            log.debug('Valor de isMemberOf :')
+            log.debug(isMemberOf)
             log.debug(type(b'' + q.content))
             try:
                 if hasattr(root.authenticationSuccess, 'user'):
@@ -256,21 +267,16 @@ class CASController(UserController):
             log.debug('Validation of ticket {0} succedded. Authenticated user: {1}'.format(
                 ticket, username.text))
             attrs = root.authenticationSuccess.attributes.__dict__
-            # for key, val in attrs.items():
-            # log.debug(key)
-            # log.debug(val.text)
-            # log.debug(type(val.text))
 
+            if isMemberOf is not None:
+                attrs.update(isMemberOf=isMemberOf)
             log.debug('Validated with attrs')
+            log.debug(attrs)
             data_dict = {}
             for key, val in cas_plugin.USER_ATTR_MAP.items():
                 if type(val) == list:
                     data_dict[key] = ' '.join([attrs.get(x).text for x in val])
-                    # log.debug('Added to data_dict [{0}] = {1}'.format(key, data_dict[key]))
                 else:
-                    # Este código fue comentado porque el CAS devuelve caracteres en unicode y daba un error
-                                        # log.debug('-->Adding to data_dict [{0}] = {1}'.format(key, attrs.get(val)))
-                    # data_dict[key] = str(attrs.get(val))
                     log.debug(
                         '-->Obteniendo el parámetro [{0}] con clave [{1}]'.format(key, val))
                     if attrs.get(val) is not None:
@@ -278,14 +284,19 @@ class CASController(UserController):
 
             fullname = data_dict['fullname']
             email = data_dict['email']
-            sysadmin = False
-            if 'sysadmin' in data_dict:
-                sysadmin = data_dict['sysadmin']
-            else:
-                #log.debug('REDIRECTING TO / (NOT ADMIN)')
-                # redirect('/')
-                abort(403, 'Solo se pueden autenticar los usuarios administradores')
             username = str(root.authenticationSuccess.user)
+            sysadmin = False
+
+            sysadmin_check = data_dict.get('sysadmin')
+            if sysadmin_check and sysadmin_check.strip():
+                cn = data_dict['sysadmin'].partition(
+                    "cn=")[2].partition(",o=")[0]
+                sysadmin = cn
+                log.debug('CN filtrado :')
+                log.debug(sysadmin)
+            else:
+                abort(
+                    403, 'Solo se pueden autenticar los usuarios pertenecientes al equipo del ISTAC')
 
             username = self._authenticate_user(
                 username, email, fullname, sysadmin)
