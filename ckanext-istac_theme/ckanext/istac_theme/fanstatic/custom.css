@@ -404,3 +404,7 @@ div.input-prepend input:nth-child(2) {
 	top: 0px;
 	right: 0px;
 }
+
+.additional-info .module-content:first-child table th:first-child{
+    width: 50% !important;
+}

@@ -180,7 +180,26 @@
                 <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
               </tr>
               {% for key, value in h.format_resource_items(res.items()) %}
-                <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
+{#                <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
+#}
+                {% if key == "datastore active"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("datastore active") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
+                {% if key == "has views"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("has views") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
+                {% if key == "last modified"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("last modified") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
+                {% if key == "on same domain"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("on same domain") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
+                {% if key == "state"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("state") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
+                {% if key == "id"%}
+                    <tr class="toggle-more"><th scope="row">{{ _("id") }}</th><td>{{ value }}</td></tr>
+                {% endif%}
               {% endfor %}
             </tbody>
           </table>
