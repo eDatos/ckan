@@ -234,9 +234,12 @@ class CASController(UserController):
                 log.debug('Cantidad de isMemberOf :')
                 log.debug(
                     len(list(root.authenticationSuccess.attributes.isMemberOf)))
-                for attr in root.authenticationSuccess.attributes.isMemberOf:
+                log.debug(list(root.authenticationSuccess.attributes.isMemberOf))
+                isMemberOfList = list(
+                    root.authenticationSuccess.attributes.isMemberOf)
+                for attr in isMemberOfList:
                     log.debug(attr)
-                    if (attr.find('IstacOpenData') != -1):
+                    if (attr.text.find('IstacOpenData') != -1):
                         isMemberOf = attr
             log.debug('Valor de isMemberOf :')
             log.debug(isMemberOf)
