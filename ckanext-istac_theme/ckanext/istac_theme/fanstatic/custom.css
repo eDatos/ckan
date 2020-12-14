@@ -68,7 +68,7 @@ a.logo img.logo-corto {
 }
 
 body {
-	background-image: url("/aplicaciones/catalogoistac/fondo_portal_datos_abiertos.jpg");
+	background-image: url("/catalogos/estadisticas/fondo_portal_datos_abiertos.jpg");
 	background-color: #eeeeee !important;
 	//background-repeat: no-repeat;
 	background-size: cover;
