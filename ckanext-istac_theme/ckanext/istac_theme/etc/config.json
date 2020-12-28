@@ -1,0 +1,10 @@
+{
+    "metadata": {
+        "endpoint": "https://estadisticas.arte-consultores.com/cmetadata/v1.0",
+        "navbarPathKey": "metamac.app.style.header.url",
+        "footerPathKey": "metamac.app.style.footer.url",
+        "appName": "Catálogo de datos abiertos",
+        "siteURL": "https://datos.canarias.es/catalogos/estadisticas/",
+        "htmlCodeClass": "istac-app-header-content"
+    }
+}
