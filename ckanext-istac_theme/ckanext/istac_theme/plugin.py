@@ -7,7 +7,6 @@ import codecs
 import requests
 
 
-
 def get_all_groups():
     '''Return a list of all the groups
     '''
@@ -36,17 +35,17 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __get_altered_header(self, header, json_config):
         """
-        Método que modifica el header para hacer que contenga los botones dinámicos
-        que se generan para esta aplicación en concreto.
+        Metodo que modifica el header para hacer que contenga los botones dinamicos
+        que se generan para esta aplicacion en concreto.
 
-        :param header: Código HTML del Header que se va a modificar
-        :param json_config: Fichero de configuración cargado como un diccionario JSON
+        :param header: Codigo HTML del Header que se va a modificar
+        :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
         alteredHeader = "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
-        # Añadimos los botones en la barra blanca
+        # Annadimos los botones en la barra blanca
         code_container = """<div class=\"""" + container_class + """\" id=\"""" + container_class + """\"></div>"""
         code = """
         <div class=\"""" + container_class + """\" id=\"""" + container_class + """\">
@@ -157,7 +156,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         alteredHeader.replace(code_container, code)
 
-        # Añadimos el botón hamburguesa
+        # Annadimos el boton hamburguesa
         code_container = """<div class="d-flex justify-content-end align-items-center">"""
         code = """
             <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
@@ -169,12 +168,12 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         return alteredHeader
 
-    
+
     def __get_url(self, json_config, key):
         """
-        Método genérico que devolverá la URL del header o footer según la clave que se pase
+        Metodo generico que devolvera la URL del header o footer segun la clave que se pase
 
-        :param json_config: Fichero de configuración cargado como un diccionario JSON
+        :param json_config: Fichero de configuracion cargado como un diccionario JSON
         :param key: Clave para buscar el header o footer
         """
         endpoint = json_config['metadata']['endpoint']
@@ -190,8 +189,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __get_header_url(self, json_config):
         """
-        Método que devuelve la URL del header
-        :param json_config: Fichero de configuración cargado como un diccionario JSON
+        Metodo que devuelve la URL del header
+        :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         header_key = json_config['metadata']['navbarPathKey']
         return "%s?appName=%s" % (self.__get_url(header_key), json_config['metadata']['appName'])
@@ -199,8 +198,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __get_footer_ulr(self, json_config):
         """
-        Método que devuelve la URL del footer
-        :param json_config: Fichero de configuración cargado como un diccionario JSON
+        Metodo que devuelve la URL del footer
+        :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         footer_key = json_config['metadata']['footerPathKey']
         return "%s?appName=%s" % (self.__get_url(footer_key), json_config['metadata']['appName'])
@@ -208,9 +207,9 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __save_footer(self, footer):
         """
-        Método que guarda el footer como template
+        Metodo que guarda el footer como template
 
-        :param footer: Código del footer en formato string que se va a guardar
+        :param footer: Codigo del footer en formato string que se va a guardar
         """
         with codecs.open('templates/footer.html', 'w', encoding='utf8') as footer_file:
             footer_file.write(footer)
@@ -218,9 +217,9 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __save_header(self, header):
         """
-        Método que guarda el header como template
+        Metodo que guarda el header como template
 
-        :param header: Código del header en formato string que se va a guardar
+        :param header: Codigo del header en formato string que se va a guardar
         """
         with codecs.open('templates/header.html', 'w', encoding='utf8') as header_file:
             header_file.write(header)
@@ -228,7 +227,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def _load_header_footer(self):
         """
-        Método que carga las templates para HEADER y FOOTER
+        Metodo que carga las templates para HEADER y FOOTER
         """
         with codecs.open(CONFIG_FILE_PATH, 'r', encoding='utf8') as config_file:
             json_config = json.loads(config_file.read())
