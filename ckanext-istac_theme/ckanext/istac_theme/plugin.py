@@ -57,7 +57,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             {% block header_account_container_content %}
                 {% if c.userobj %}
                     <nav class="navigation">
-                        <div class="nav-collapse collapse account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
+                        <div class="collapsable-menu account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
                             <ul class="">
                                 {% block header_account_logged %}
                                     {% if c.userobj.sysadmin %}
@@ -98,9 +98,11 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                                     {% block header_site_navigation_tabs_3 %}
                                         {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
                                         <li>
-                                            <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                {{ _('Datasets') }}
-                                            </a>
+                                            <div class="dataset-container">
+                                                <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
+                                                    {{ _('Datasets') }}
+                                                </a>
+                                            </div>
                                         </li>
                                     {% endblock %}
                                     {% block header_account_log_out_link %}
@@ -118,14 +120,16 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 {% else %}
                     {% block header_site_navigation %}
                         <nav class="navigation">
-                            <div class="nav-collapse collapse account avata account avatar">
+                            <div id="" class="collapsable-menu account avatar account avatar">
                                 <ul class="">
                                     {% block header_site_navigation_tabs_2 %}
                                         {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
                                         <li>
-                                            <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                {{ _('Datasets') }}
-                                            </a>
+                                            <div class="dataset-container">
+                                                <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
+                                                    {{ _('Datasets') }}
+                                                </a>
+                                            </div>
                                         </li>
                                     {% endblock %}
                                     {% block header_account_log_out_link_2 %}
@@ -153,7 +157,36 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         container = soup.find(class_='d-flex justify-content-end align-items-center')
 
         code = """
-            <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+            <script>
+                let abierto = false;
+                const menus = document.getElementsByClassName("collapsable-menu");
+
+                function abrir_menu() {
+                    for (let menu of menus) {
+                        menu.classList.add("abrir");
+                    }
+                    abierto = true;
+                }
+
+                function cerrar_menu() {
+                    for (let menu of menus) {
+                        menu.classList.remove("abrir");
+                    }
+                    abierto = false;
+                }
+
+                function toggle_collapsable_menu() {
+                    if (abierto) {
+                        cerrar_menu();
+                        return;
+                    } else {
+                        abrir_menu();
+                        return;
+                    }
+                }
+            </script>
+            
+            <button onclick="toggle_collapsable_menu()" class="btn btn-navbar" type="button">
                 <span class="fa fa-bars"></span>
             </button>
         """
