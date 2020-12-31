@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
@@ -5,6 +7,9 @@ from ckan.lib.plugins import DefaultTranslation
 import json
 import codecs
 import requests
+import os
+from bs4 import BeautifulSoup
+from HTMLParser import HTMLParser
 
 
 def get_all_groups():
@@ -24,8 +29,11 @@ def get_count_all_datasets():
 
     return count
 
+dirname = os.path.dirname(__file__)
+CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
+FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
+HEADER_PATH = os.path.join(dirname, 'templates/header.html')
 
-CONFIG_FILE_PATH = "etc/config.json"
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
@@ -43,22 +51,11 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
-        alteredHeader = "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
         # Annadimos los botones en la barra blanca
-        code_container = """<div class=\"""" + container_class + """\" id=\"""" + container_class + """\"></div>"""
         code = """
-        <div class=\"""" + container_class + """\" id=\"""" + container_class + """\">
             {% block header_account_container_content %}
                 {% if c.userobj %}
-                    {% block header_home_navigation_logueado %}
-                        <a class="home-app pull-left" href="{{ h.url_for('home') }}">
-                            <span class="title-icon">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                            </span>
-                            {{ g.site_title  }}
-                        </a>
-                    {% endblock %}
                     <nav class="navigation">
                         <div class="nav-collapse collapse account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
                             <ul class="">
@@ -119,14 +116,6 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                         </div>
                     </nav>
                 {% else %}
-                    {% block header_home_navigation %}
-                        <a class="home-app pull-left" href="{{ h.url_for('home') }}">
-                            <span class="title-icon">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                            </span>
-                            {{ g.site_title  }}
-                        </a>
-                    {% endblock %}
                     {% block header_site_navigation %}
                         <nav class="navigation">
                             <div class="nav-collapse collapse account avata account avatar">
@@ -152,36 +141,42 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                     {% endblock %}
                 {% endif %}
             {% endblock %}
-        </div>
         """
-        alteredHeader.replace(code_container, code)
+        soup = BeautifulSoup(alteredHeader, 'html.parser')
+        container = soup.find(id=container_class)
+        container.append(BeautifulSoup(code, 'html.parser'))
 
+        alteredHeader = soup.prettify('utf-8')
+	    
         # Annadimos el boton hamburguesa
-        code_container = """<div class="d-flex justify-content-end align-items-center">"""
+        soup = BeautifulSoup(alteredHeader, 'html.parser')
+        container = soup.find(class_='d-flex justify-content-end align-items-center')
+
         code = """
             <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
                 <span class="fa fa-bars"></span>
             </button>
-            <div class="d-flex justify-content-end align-items-center">
         """
-        alteredHeader.replace(code_container, code)
+        container.append(BeautifulSoup(code, 'html.parser'))
+        alteredHeader = soup.prettify('utf-8')
+        
+        alteredHeader = alteredHeader.replace('&gt;', '>')
 
-        return alteredHeader
+        return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
 
-    def __get_url(self, json_config, key):
+    def __get_url(self, endpoint, key):
         """
         Metodo generico que devolvera la URL del header o footer segun la clave que se pase
 
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         :param key: Clave para buscar el header o footer
         """
-        endpoint = json_config['metadata']['endpoint']
         url = "%s/properties/%s.json" % (endpoint, key)
         headers = {
-            'Content-Type': 'text/html'
+            'Content-Type': 'application/json'
         }
-        header_request = requests.get(url=url, headers=headers)
+        header_request = requests.get(url=url, headers=headers).content
         json_header_request = json.loads(header_request)
 
         return json_header_request['value']
@@ -193,7 +188,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         header_key = json_config['metadata']['navbarPathKey']
-        return "%s?appName=%s" % (self.__get_url(header_key), json_config['metadata']['appName'])
+	endpoint = json_config['metadata']['endpoint']
+        return "%s?appName=%s" % (self.__get_url(endpoint, header_key), json_config['metadata']['appName'])
 
 
     def __get_footer_ulr(self, json_config):
@@ -202,7 +198,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         footer_key = json_config['metadata']['footerPathKey']
-        return "%s?appName=%s" % (self.__get_url(footer_key), json_config['metadata']['appName'])
+	endpoint = json_config['metadata']['endpoint']
+        return "%s?appName=%s" % (self.__get_url(endpoint, footer_key), json_config['metadata']['appName'])
 
 
     def __save_footer(self, footer):
@@ -211,7 +208,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         :param footer: Codigo del footer en formato string que se va a guardar
         """
-        with codecs.open('templates/footer.html', 'w', encoding='utf8') as footer_file:
+        with codecs.open(FOOTER_PATH, 'w', encoding='utf8') as footer_file:
             footer_file.write(footer)
 
 
@@ -221,7 +218,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         :param header: Codigo del header en formato string que se va a guardar
         """
-        with codecs.open('templates/header.html', 'w', encoding='utf8') as header_file:
+        with codecs.open(HEADER_PATH, 'w', encoding='utf8') as header_file:
             header_file.write(header)
 
 
@@ -235,6 +232,10 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             header = self.__get_altered_header(header=header, json_config=json_config)
             footer = requests.get(url=self.__get_footer_ulr(json_config)).content
 
+
+            footer = footer.decode('utf-8')
+            header = header.decode('utf-8')
+
             self.__save_header(header=header)
             self.__save_footer(footer=footer)
 
@@ -244,7 +245,6 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'istac_theme')
-
 
     def get_helpers(self):
         '''Register the get_all_groups function as a template helper function.

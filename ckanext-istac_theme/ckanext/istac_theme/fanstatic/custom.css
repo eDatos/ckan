@@ -78,20 +78,20 @@ body {
 
 }
 
-.masthead .navigation .nav-pills li a,
-.masthead .navigation .nav-pills li.active a {
+.navigation .nav-pills li a,
+.navigation .nav-pills li.active a {
 	background-color: #008bd0;
 	color: #ffffff;
 }
 
-.masthead .navigation .nav-pills li a:hover,
-.masthead .navigation .nav-pills li.active a {
+.navigation .nav-pills li a:hover,
+.navigation .nav-pills li.active a {
 	background-color: #008bd0;
 	color: #ffffff;
 }
 
-.home-app,
-.account-masthead .account ul li a {
+
+.istac-app-header.istac-title-bar .account ul li a {
 	display: block;
 	color: #59656e;
 	font-size: 16px;
@@ -101,7 +101,7 @@ body {
 }
 
 
-.account-masthead .account ul li a:hover {
+.istac-app-header.istac-title-bar .account ul li a:hover {
 	color: #ffffff;
 	background-color: #008bd0;
 	text-decoration: none;
@@ -153,7 +153,7 @@ a:focus {
 	margin-top: -13px;
 }
 
-.account-masthead .account ul li{
+.istac-app-header.istac-title-bar .account ul li{
 	border-left: 1px solid #dddddd;
 }
 
@@ -169,14 +169,14 @@ a:focus {
 }
 
 .nav-item.active > a, .nav-aside li.active a,
-.account-masthead .account ul li a.btn-datasets {
+.istac-app-header.istac-title-bar .account ul li a.btn-datasets {
 	background-color: #bbc8d0;
 	color: #FFFFFF;	
 }
 
 
-.account-masthead .account ul li a.btn-datasets:hover, 
-.account-masthead .account ul li.active a.btn-datasets {
+.istac-app-header.istac-title-bar .account ul li a.btn-datasets:hover, 
+.istac-app-header.istac-title-bar .account ul li.active a.btn-datasets {
 	background-color: #008bd0;
 	color: #FFFFFF;	
 }
@@ -358,7 +358,7 @@ div.input-prepend input:nth-child(2) {
 	.logo.hidden-lg-down {
         	display: none !important;
         }
-        .navbar .btn-navbar {
+        .btn.btn-navbar {
         	display:block;
 		padding: 0px 10px
         }
@@ -408,3 +408,40 @@ div.input-prepend input:nth-child(2) {
 .additional-info .module-content:first-child table th:first-child{
     width: 50% !important;
 }
+
+/* Añadidos tras la modificación para  */
+
+nav.navigation li a {
+    display: block;
+    color: #59656E;
+    font-size: 16px;
+    font-weight: initial;
+    padding: 0 10px;
+    line-height: 31px;
+    text-decoration: none;
+}
+
+nav.navigation li a.btn-datasets {
+    background-color: #BBC8D0;
+    color: white;
+}
+
+nav.navigation div ul li {
+    border-left: 1px solid #DDDDDD;
+    display: block;
+    float: left;
+    color: white;
+    
+}
+
+button.btn.btn-navbar {
+    background-image: none;
+    border-style: none;
+    box-shadow: none;
+    padding-left: 1rem;
+}
+
+#title-bar {
+    padding-top: 6rem;
+}
+
