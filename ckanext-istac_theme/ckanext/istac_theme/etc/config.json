@@ -5,6 +5,7 @@
         "footerPathKey": "metamac.app.style.footer.url",
         "appName": "Catálogo de datos abiertos",
         "siteURL": "https://pre-datos.canarias.es/catalogos/estadisticas/",
-        "htmlCodeClass": "istac-app-header-content"
+        "htmlCodeClass": "istac-app-header-content",
+        "groupPaginationLimit": 24
     }
 }

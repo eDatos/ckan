@@ -1,23 +1,41 @@
 #-*- coding: UTF-8 -*-
-
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
+from ckan.common import request
+import ckan.lib.helpers as h
 
 import json
 import codecs
 import requests
 import os
 from bs4 import BeautifulSoup
-from HTMLParser import HTMLParser
+
+
+def get_group_pagination_limit():
+    """
+    Devuelve el límite de paginación para grupos definida en el archivo
+    de configuración etc/config.json
+    """
+
+    with codecs.open(CONFIG_FILE_PATH, 'r') as json_file:
+        json_data = json.loads(json_file.read())
+        # Se asume que es un número entero, en otro caso habrá que hacer cast con int()
+        return json_data['metadata']['groupPaginationLimit'] 
 
 
 def get_all_groups():
     '''Return a list of all the groups
     '''
-    groups = toolkit.get_action('group_list')(
-        data_dict={'all_fields': True})
+    items_per_page = get_group_pagination_limit()
+    page = h.get_page_number(request.params) or 1
+    data_dict = {
+        'all_fields': True,
+        'limit': items_per_page,
+        'offset': items_per_page * (page - 1),
+    }
 
+    groups = toolkit.get_action('group_list')(data_dict=data_dict)
     return groups
 
 
@@ -29,10 +47,13 @@ def get_count_all_datasets():
 
     return count
 
+
 dirname = os.path.dirname(__file__)
 CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
 FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
 HEADER_PATH = os.path.join(dirname, 'templates/header.html')
+HEADER_WHITE_BAR_PATH = os.path.join(dirname, 'code_templates/header_white_bar.html')
+BURGER_BUTTON_PATH = os.path.join(dirname, 'code_templates/burger_button.html')
 
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
@@ -52,148 +73,23 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
 
-        # Annadimos los botones en la barra blanca
-        code = """
-            {% block header_account_container_content %}
-                {% if c.userobj %}
-                    <nav class="navigation">
-                        <div class="collapsable-menu account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
-                            <ul class="">
-                                {% block header_account_logged %}
-                                    {% if c.userobj.sysadmin %}
-                                        <li>
-                                            <a href="{{ h.url_for(controller='admin', action='index') }}"
-                                                title="{{ _('Sysadmin settings') }}">
-                                                <i class="fa fa-gavel" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Admin') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    <li>
-                                        <a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}" class="image"
-                                            title="{{ _('View profile') }}">
-                                            {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
-                                            <span class="username">{{ c.userobj.display_name }}</span>
-                                        </a>
-                                    </li>
-                                    {% set new_activities = h.new_activities() %}
-                                    <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
-                                        {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
-                                        <a href="{{ h.url_for(controller='user', action='dashboard') }}"
-                                            title="{{ notifications_tooltip }}">
-                                            <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                            <span class="text">{{ _('Dashboard') }}</span>
-                                            <span class="badge">{{ new_activities }}</span>
-                                        </a>
-                                    </li>
-                                    {% block header_account_settings_link %}
-                                        <li>
-                                            <a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}"
-                                                title="{{ _('Edit settings') }}">
-                                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Settings') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_site_navigation_tabs_3 %}
-                                        {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
-                                        <li>
-                                            <div class="dataset-container">
-                                                <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                    {{ _('Datasets') }}
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_account_log_out_link %}
-                                        <li>
-                                            <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
-                                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Log out') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                {% endblock %}
-                            </ul>
-                        </div>
-                    </nav>
-                {% else %}
-                    {% block header_site_navigation %}
-                        <nav class="navigation">
-                            <div id="" class="collapsable-menu account avatar account avatar">
-                                <ul class="">
-                                    {% block header_site_navigation_tabs_2 %}
-                                        {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
-                                        <li>
-                                            <div class="dataset-container">
-                                                <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                    {{ _('Datasets') }}
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_account_log_out_link_2 %}
-                                        <li>
-                                            <a href="{{ h.url_for('/user/login') }}" title="{{ _('Log in') }}">
-                                                <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                            </a>
-                                        </li>   
-                                    {% endblock %}
-                                </ul>
-                            </div>
-                        </nav>
-                    {% endblock %}
-                {% endif %}
-            {% endblock %}
-        """
-        soup = BeautifulSoup(alteredHeader, 'html.parser')
-        container = soup.find(id=container_class)
-        container.append(BeautifulSoup(code, 'html.parser'))
-
-        alteredHeader = soup.prettify('utf-8')
-	    
-        # Annadimos el boton hamburguesa
-        soup = BeautifulSoup(alteredHeader, 'html.parser')
-        container = soup.find(class_='d-flex justify-content-end align-items-center')
-
-        code = """
-            <script>
-                let abierto = false;
-                const menus = document.getElementsByClassName("collapsable-menu");
-
-                function abrir_menu() {
-                    for (let menu of menus) {
-                        menu.classList.add("abrir");
-                    }
-                    abierto = true;
-                }
-
-                function cerrar_menu() {
-                    for (let menu of menus) {
-                        menu.classList.remove("abrir");
-                    }
-                    abierto = false;
-                }
-
-                function toggle_collapsable_menu() {
-                    if (abierto) {
-                        cerrar_menu();
-                        return;
-                    } else {
-                        abrir_menu();
-                        return;
-                    }
-                }
-            </script>
+        with codecs.open(HEADER_WHITE_BAR_PATH, 'r', encoding='utf8') as white_bar_file:
+            code = white_bar_file.read()
+            # Annadimos los botones en la barra blanca
+            soup = BeautifulSoup(alteredHeader, 'html.parser')
+            container = soup.find(id=container_class)
+            container.append(BeautifulSoup(code, 'html.parser'))
+            alteredHeader = soup.prettify('utf-8')
             
-            <button onclick="toggle_collapsable_menu()" class="btn btn-navbar" type="button">
-                <span class="fa fa-bars"></span>
-            </button>
-        """
-        container.append(BeautifulSoup(code, 'html.parser'))
-        alteredHeader = soup.prettify('utf-8')
-        
-        alteredHeader = alteredHeader.replace('&gt;', '>')
+            # Annadimos el boton hamburguesa
+            soup = BeautifulSoup(alteredHeader, 'html.parser')
+            container = soup.find(class_='d-flex justify-content-end align-items-center')
+            
+        with codecs.open(BURGER_BUTTON_PATH, 'r', encoding='utf8') as burger_button_file:
+            code = burger_button_file.read()
+            container.append(BeautifulSoup(code, 'html.parser'))
+            alteredHeader = soup.prettify('utf-8')
+            alteredHeader = alteredHeader.replace('&gt;', '>')
 
         return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
@@ -221,7 +117,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         header_key = json_config['metadata']['navbarPathKey']
-	endpoint = json_config['metadata']['endpoint']
+        endpoint = json_config['metadata']['endpoint']
         return "%s?appName=%s" % (self.__get_url(endpoint, header_key), json_config['metadata']['appName'])
 
 
@@ -231,7 +127,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         footer_key = json_config['metadata']['footerPathKey']
-	endpoint = json_config['metadata']['endpoint']
+        endpoint = json_config['metadata']['endpoint']
         return "%s?appName=%s" % (self.__get_url(endpoint, footer_key), json_config['metadata']['appName'])
 
 
@@ -278,6 +174,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'istac_theme')
+
 
     def get_helpers(self):
         '''Register the get_all_groups function as a template helper function.
