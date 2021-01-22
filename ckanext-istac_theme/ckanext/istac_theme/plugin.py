@@ -118,7 +118,9 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         header_key = json_config['metadata']['navbarPathKey']
         endpoint = json_config['metadata']['endpoint']
-        return "%s?appName=%s" % (self.__get_url(endpoint, header_key), json_config['metadata']['appName'])
+        return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, header_key),
+                                                           json_config['metadata']['appName'],
+                                                           json_config['metadata']['siteURL'])
 
 
     def __get_footer_ulr(self, json_config):
@@ -128,7 +130,9 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         footer_key = json_config['metadata']['footerPathKey']
         endpoint = json_config['metadata']['endpoint']
-        return "%s?appName=%s" % (self.__get_url(endpoint, footer_key), json_config['metadata']['appName'])
+        return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, footer_key),
+                                                           json_config['metadata']['appName'],
+                                                           json_config['metadata']['siteURL'])
 
 
     def __save_footer(self, footer):
