@@ -1,18 +1,41 @@
+#-*- coding: UTF-8 -*-
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
+from ckan.common import request
+import ckan.lib.helpers as h
 
 import json
 import codecs
 import requests
+import os
+from bs4 import BeautifulSoup
+
+
+def get_group_pagination_limit():
+    """
+    Devuelve el límite de paginación para grupos definida en el archivo
+    de configuración etc/config.json
+    """
+
+    with codecs.open(CONFIG_FILE_PATH, 'r') as json_file:
+        json_data = json.loads(json_file.read())
+        # Se asume que es un número entero, en otro caso habrá que hacer cast con int()
+        return json_data['metadata']['groupPaginationLimit'] 
 
 
 def get_all_groups():
     '''Return a list of all the groups
     '''
-    groups = toolkit.get_action('group_list')(
-        data_dict={'all_fields': True})
+    items_per_page = get_group_pagination_limit()
+    page = h.get_page_number(request.params) or 1
+    data_dict = {
+        'all_fields': True,
+        'limit': items_per_page,
+        'offset': items_per_page * (page - 1),
+    }
 
+    groups = toolkit.get_action('group_list')(data_dict=data_dict)
     return groups
 
 
@@ -25,7 +48,13 @@ def get_count_all_datasets():
     return count
 
 
-CONFIG_FILE_PATH = "etc/config.json"
+dirname = os.path.dirname(__file__)
+CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
+FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
+HEADER_PATH = os.path.join(dirname, 'templates/header.html')
+HEADER_WHITE_BAR_PATH = os.path.join(dirname, 'code_templates/header_white_bar.html')
+BURGER_BUTTON_PATH = os.path.join(dirname, 'code_templates/burger_button.html')
+
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
@@ -43,145 +72,40 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
-        alteredHeader = "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
-        # Annadimos los botones en la barra blanca
-        code_container = """<div class=\"""" + container_class + """\" id=\"""" + container_class + """\"></div>"""
-        code = """
-        <div class=\"""" + container_class + """\" id=\"""" + container_class + """\">
-            {% block header_account_container_content %}
-                {% if c.userobj %}
-                    {% block header_home_navigation_logueado %}
-                        <a class="home-app pull-left" href="{{ h.url_for('home') }}">
-                            <span class="title-icon">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                            </span>
-                            {{ g.site_title  }}
-                        </a>
-                    {% endblock %}
-                    <nav class="navigation">
-                        <div class="nav-collapse collapse account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
-                            <ul class="">
-                                {% block header_account_logged %}
-                                    {% if c.userobj.sysadmin %}
-                                        <li>
-                                            <a href="{{ h.url_for(controller='admin', action='index') }}"
-                                                title="{{ _('Sysadmin settings') }}">
-                                                <i class="fa fa-gavel" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Admin') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    <li>
-                                        <a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}" class="image"
-                                            title="{{ _('View profile') }}">
-                                            {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
-                                            <span class="username">{{ c.userobj.display_name }}</span>
-                                        </a>
-                                    </li>
-                                    {% set new_activities = h.new_activities() %}
-                                    <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
-                                        {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
-                                        <a href="{{ h.url_for(controller='user', action='dashboard') }}"
-                                            title="{{ notifications_tooltip }}">
-                                            <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                            <span class="text">{{ _('Dashboard') }}</span>
-                                            <span class="badge">{{ new_activities }}</span>
-                                        </a>
-                                    </li>
-                                    {% block header_account_settings_link %}
-                                        <li>
-                                            <a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}"
-                                                title="{{ _('Edit settings') }}">
-                                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Settings') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_site_navigation_tabs_3 %}
-                                        {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
-                                        <li>
-                                            <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                {{ _('Datasets') }}
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_account_log_out_link %}
-                                        <li>
-                                            <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
-                                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                                <span class="text">{{ _('Log out') }}</span>
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                {% endblock %}
-                            </ul>
-                        </div>
-                    </nav>
-                {% else %}
-                    {% block header_home_navigation %}
-                        <a class="home-app pull-left" href="{{ h.url_for('home') }}">
-                            <span class="title-icon">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                            </span>
-                            {{ g.site_title  }}
-                        </a>
-                    {% endblock %}
-                    {% block header_site_navigation %}
-                        <nav class="navigation">
-                            <div class="nav-collapse collapse account avata account avatar">
-                                <ul class="">
-                                    {% block header_site_navigation_tabs_2 %}
-                                        {#{{ h.build_nav_main(('search', _('Datasets'))) }}#}
-                                        <li>
-                                            <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                                {{ _('Datasets') }}
-                                            </a>
-                                        </li>
-                                    {% endblock %}
-                                    {% block header_account_log_out_link_2 %}
-                                        <li>
-                                            <a href="{{ h.url_for('/user/login') }}" title="{{ _('Log in') }}">
-                                                <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                            </a>
-                                        </li>   
-                                    {% endblock %}
-                                </ul>
-                            </div>
-                        </nav>
-                    {% endblock %}
-                {% endif %}
-            {% endblock %}
-        </div>
-        """
-        alteredHeader.replace(code_container, code)
+        with codecs.open(HEADER_WHITE_BAR_PATH, 'r', encoding='utf8') as white_bar_file:
+            code = white_bar_file.read()
+            # Annadimos los botones en la barra blanca
+            soup = BeautifulSoup(alteredHeader, 'html.parser')
+            container = soup.find(id=container_class)
+            container.append(BeautifulSoup(code, 'html.parser'))
+            alteredHeader = soup.prettify('utf-8')
+            
+            # Annadimos el boton hamburguesa
+            soup = BeautifulSoup(alteredHeader, 'html.parser')
+            container = soup.find(class_='d-flex justify-content-end align-items-center')
+            
+        with codecs.open(BURGER_BUTTON_PATH, 'r', encoding='utf8') as burger_button_file:
+            code = burger_button_file.read()
+            container.append(BeautifulSoup(code, 'html.parser'))
+            alteredHeader = soup.prettify('utf-8')
+            alteredHeader = alteredHeader.replace('&gt;', '>')
 
-        # Annadimos el boton hamburguesa
-        code_container = """<div class="d-flex justify-content-end align-items-center">"""
-        code = """
-            <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="d-flex justify-content-end align-items-center">
-        """
-        alteredHeader.replace(code_container, code)
-
-        return alteredHeader
+        return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
 
-    def __get_url(self, json_config, key):
+    def __get_url(self, endpoint, key):
         """
         Metodo generico que devolvera la URL del header o footer segun la clave que se pase
 
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         :param key: Clave para buscar el header o footer
         """
-        endpoint = json_config['metadata']['endpoint']
         url = "%s/properties/%s.json" % (endpoint, key)
         headers = {
-            'Content-Type': 'text/html'
+            'Content-Type': 'application/json'
         }
-        header_request = requests.get(url=url, headers=headers)
+        header_request = requests.get(url=url, headers=headers).content
         json_header_request = json.loads(header_request)
 
         return json_header_request['value']
@@ -193,7 +117,10 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         header_key = json_config['metadata']['navbarPathKey']
-        return "%s?appName=%s" % (self.__get_url(header_key), json_config['metadata']['appName'])
+        endpoint = json_config['metadata']['endpoint']
+        return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, header_key),
+                                                           json_config['metadata']['appName'],
+                                                           json_config['metadata']['siteURL'])
 
 
     def __get_footer_ulr(self, json_config):
@@ -202,7 +129,10 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         :param json_config: Fichero de configuracion cargado como un diccionario JSON
         """
         footer_key = json_config['metadata']['footerPathKey']
-        return "%s?appName=%s" % (self.__get_url(footer_key), json_config['metadata']['appName'])
+        endpoint = json_config['metadata']['endpoint']
+        return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, footer_key),
+                                                           json_config['metadata']['appName'],
+                                                           json_config['metadata']['siteURL'])
 
 
     def __save_footer(self, footer):
@@ -211,7 +141,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         :param footer: Codigo del footer en formato string que se va a guardar
         """
-        with codecs.open('templates/footer.html', 'w', encoding='utf8') as footer_file:
+        with codecs.open(FOOTER_PATH, 'w', encoding='utf8') as footer_file:
             footer_file.write(footer)
 
 
@@ -221,7 +151,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         :param header: Codigo del header en formato string que se va a guardar
         """
-        with codecs.open('templates/header.html', 'w', encoding='utf8') as header_file:
+        with codecs.open(HEADER_PATH, 'w', encoding='utf8') as header_file:
             header_file.write(header)
 
 
@@ -234,6 +164,10 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             header = requests.get(url=self.__get_header_url(json_config)).content
             header = self.__get_altered_header(header=header, json_config=json_config)
             footer = requests.get(url=self.__get_footer_ulr(json_config)).content
+
+
+            footer = footer.decode('utf-8')
+            header = header.decode('utf-8')
 
             self.__save_header(header=header)
             self.__save_footer(footer=footer)
