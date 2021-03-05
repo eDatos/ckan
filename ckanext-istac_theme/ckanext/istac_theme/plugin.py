@@ -1,4 +1,4 @@
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
@@ -21,7 +21,7 @@ def get_group_pagination_limit():
     with codecs.open(CONFIG_FILE_PATH, 'r') as json_file:
         json_data = json.loads(json_file.read())
         # Se asume que es un número entero, en otro caso habrá que hacer cast con int()
-        return json_data['metadata']['groupPaginationLimit'] 
+        return json_data['metadata']['groupPaginationLimit']
 
 
 def get_all_groups():
@@ -52,15 +52,16 @@ dirname = os.path.dirname(__file__)
 CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
 FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
 HEADER_PATH = os.path.join(dirname, 'templates/header.html')
-HEADER_WHITE_BAR_PATH = os.path.join(dirname, 'code_templates/header_white_bar.html')
+HEADER_WHITE_BAR_PATH = os.path.join(
+    dirname, 'code_templates/header_white_bar.html')
 BURGER_BUTTON_PATH = os.path.join(dirname, 'code_templates/burger_button.html')
+
 
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
     # IConfigurer
-
 
     def __get_altered_header(self, header, json_config):
         """
@@ -80,11 +81,12 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             container = soup.find(id=container_class)
             container.append(BeautifulSoup(code, 'html.parser'))
             alteredHeader = soup.prettify('utf-8')
-            
+
             # Annadimos el boton hamburguesa
             soup = BeautifulSoup(alteredHeader, 'html.parser')
-            container = soup.find(class_='d-flex justify-content-end align-items-center')
-            
+            container = soup.find(
+                class_='d-flex justify-content-end align-items-center')
+
         with codecs.open(BURGER_BUTTON_PATH, 'r', encoding='utf8') as burger_button_file:
             code = burger_button_file.read()
             container.append(BeautifulSoup(code, 'html.parser'))
@@ -92,7 +94,6 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             alteredHeader = alteredHeader.replace('&gt;', '>')
 
         return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
-
 
     def __get_url(self, endpoint, key):
         """
@@ -110,7 +111,6 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
         return json_header_request['value']
 
-
     def __get_header_url(self, json_config):
         """
         Metodo que devuelve la URL del header
@@ -119,9 +119,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         header_key = json_config['metadata']['navbarPathKey']
         endpoint = json_config['metadata']['endpoint']
         return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, header_key),
-                                                           json_config['metadata']['appName'],
-                                                           json_config['metadata']['siteURL'])
-
+                                            json_config['metadata']['appName'],
+                                            json_config['metadata']['siteURL'])
 
     def __get_footer_ulr(self, json_config):
         """
@@ -131,9 +130,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         footer_key = json_config['metadata']['footerPathKey']
         endpoint = json_config['metadata']['endpoint']
         return "%s?appName=%s&appUrl=%s" % (self.__get_url(endpoint, footer_key),
-                                                           json_config['metadata']['appName'],
-                                                           json_config['metadata']['siteURL'])
-
+                                            json_config['metadata']['appName'],
+                                            json_config['metadata']['siteURL'])
 
     def __save_footer(self, footer):
         """
@@ -144,7 +142,6 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         with codecs.open(FOOTER_PATH, 'w', encoding='utf8') as footer_file:
             footer_file.write(footer)
 
-
     def __save_header(self, header):
         """
         Metodo que guarda el header como template
@@ -154,17 +151,18 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         with codecs.open(HEADER_PATH, 'w', encoding='utf8') as header_file:
             header_file.write(header)
 
-
     def _load_header_footer(self):
         """
         Metodo que carga las templates para HEADER y FOOTER
         """
         with codecs.open(CONFIG_FILE_PATH, 'r', encoding='utf8') as config_file:
             json_config = json.loads(config_file.read())
-            header = requests.get(url=self.__get_header_url(json_config)).content
-            header = self.__get_altered_header(header=header, json_config=json_config)
-            footer = requests.get(url=self.__get_footer_ulr(json_config)).content
-
+            header = requests.get(
+                url=self.__get_header_url(json_config)).content
+            header = self.__get_altered_header(
+                header=header, json_config=json_config)
+            footer = requests.get(
+                url=self.__get_footer_ulr(json_config)).content
 
             footer = footer.decode('utf-8')
             header = header.decode('utf-8')
@@ -172,13 +170,11 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             self.__save_header(header=header)
             self.__save_footer(footer=footer)
 
-
     def update_config(self, config_):
         self._load_header_footer()
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'istac_theme')
-
 
     def get_helpers(self):
         '''Register the get_all_groups function as a template helper function.
