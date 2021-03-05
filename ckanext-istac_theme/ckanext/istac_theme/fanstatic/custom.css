@@ -60,7 +60,6 @@ a.logo img.logo-corto {
 body {
 	background-image: url("/catalogos/estadisticas/fondo_portal_datos_abiertos.jpg");
 	background-color: #eeeeee !important;
-	//background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
 	padding: 0px !important;
@@ -321,7 +320,6 @@ a:focus {
 	justify-content:center;
 }
 
-// Estilo para los iconos de las categorias en moviles
 @media only screen and (max-width: 767px) {
 	[class*="span"],
  	.uneditable-input[class*="span"],
