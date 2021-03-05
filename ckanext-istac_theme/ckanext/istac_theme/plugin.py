@@ -87,12 +87,13 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             container = soup.find(
                 class_='d-flex justify-content-end align-items-center')
 
-        with codecs.open(BURGER_BUTTON_PATH, 'r', encoding='utf8') as burger_button_file:
-            code = burger_button_file.read()
-            container.append(BeautifulSoup(code, 'html.parser'))
-            alteredHeader = soup.prettify('utf-8')
-            alteredHeader = alteredHeader.replace('&gt;', '>')
+        if container is not None:
+            with codecs.open(BURGER_BUTTON_PATH, 'r', encoding='utf8') as burger_button_file:
+                code = burger_button_file.read()
+                container.append(BeautifulSoup(code, 'html.parser'))
+                alteredHeader = soup.prettify('utf-8')
 
+        alteredHeader = alteredHeader.replace('&gt;', '>')
         return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
     def __get_url(self, endpoint, key):
