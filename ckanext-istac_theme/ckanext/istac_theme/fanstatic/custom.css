@@ -60,6 +60,7 @@ a.logo img.logo-corto {
 body {
 	background-image: url("/catalogos/estadisticas/fondo_portal_datos_abiertos.jpg");
 	background-color: #eeeeee !important;
+	//background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
 	padding: 0px !important;
@@ -320,6 +321,7 @@ a:focus {
 	justify-content:center;
 }
 
+// Estilo para los iconos de las categorias en moviles
 @media only screen and (max-width: 767px) {
 	[class*="span"],
  	.uneditable-input[class*="span"],
@@ -371,6 +373,8 @@ div.input-prepend input:nth-child(2) {
             -o-transition: 0.5s;
             transition: 0.5s;
             transition-property: height;
+            height: 0px;
+
             padding-top: 1rem;
             overflow: hidden;
             margin-right: 36px;
@@ -402,9 +406,6 @@ div.input-prepend input:nth-child(2) {
             left: -2rem;
         }
         
-	#title-bar {
-		margin-top: 50px !important;
-	}
 }
 @media (max-width: 767px) {
 	a.logo img.logo-corto {
@@ -421,6 +422,9 @@ div.input-prepend input:nth-child(2) {
             display: none !important;
         }
         
+        #title-bar {
+            padding-top: 5rem !important;
+        }
 }
 
 .btn.btn-navbar {
@@ -485,10 +489,11 @@ i.fa.fa-istac-home {
 
 .istac-title-bar a h1 {
     position: relative;
+    top: 0.6rem;
 }
 
 #title-bar {
-    margin-top: 70px;
+    padding-top: 3rem;
 }
 
 /*
@@ -508,8 +513,4 @@ i.fa.fa-istac-home {
 	transition: 0.1s;
         transition-property: height;
 	height: 100%;
-}
-
-#istac-app-header-content ul {
-	margin: 0 0 0 0;
 }
