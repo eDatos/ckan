@@ -1,10 +1,10 @@
 {
     "metadata": {
-        "endpoint": "FILL ME",
+        "endpoint": "https://pre-ibestat.edatos.io/cmetadata/v1.0",
         "navbarPathKey": "metamac.app.style.header.url",
         "footerPathKey": "metamac.app.style.footer.url",
-        "appName": "FILL ME",
-        "siteURL": "FILL ME",
+        "appName": "Catálogo de datos abiertos",
+        "siteURL": "https://pre-ibestat.edatos.io/catalogo/",
         "htmlCodeClass": "istac-app-header-content",
         "groupPaginationLimit": 24
     }
