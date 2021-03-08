@@ -1,5 +1,4 @@
 
-=============
 ckanext-istac_theme
 =============
 
@@ -29,9 +28,22 @@ Para instalar la extensión ckanext-istac_theme:
 3. Añadir la extensión en la lista de plugins de CKAN  en el fichero de configuración
    ``/servers/opendata/ckan/default/development.ini`` en la propiedad ``ckan.plugins`` añadir ``istac_theme``
 
-4. Reiniciar el servidor Apache estando como root::
+
+4. Rellenar las URL y propiedades de configuración del fichero ``/ckanext/istac_theme/etc/config.json``
+
+5. Reiniciar el servidor Apache estando como root::
 
      systemctl restart httpd
+
+
+---
+
+* NOTA:
+Para visualizar los posibles cambios efectuados en componentes-apps, en header y footer, es necesario realizar una reload del servicho Apache:
+
+     systemctl reload httpd 
+
+
 
 
 ------------------------
