@@ -307,9 +307,21 @@ a:focus {
 		width: 1400px;
 	}
 
+	.span6 {
+		width: 680px;
+	}
+	
 	.span9 {
 		width: 1170px;
 	}
+
+	.span12 {
+		width: inherit;
+	}
+}
+
+.span12 {
+	margin: 0px !important;
 }
 
 
