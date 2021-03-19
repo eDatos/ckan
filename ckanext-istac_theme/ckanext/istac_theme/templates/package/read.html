@@ -33,6 +33,12 @@
     <span class="insert-comment-thread"></span>
   {% endblock %}
 
+  {% block showcase_list %}
+    {% if h.package_showcase_list(c) %}
+      {% snippet "showcase/snippets/showcase_list.html", packages=h.package_showcase_list(c), pkg_id=c.pkg_dict.name %}
+    {% endif %}
+  {% endblock %}
+
   {% block package_resources %}
     {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
   {% endblock %}

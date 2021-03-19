@@ -48,6 +48,10 @@ def get_count_all_datasets():
     return count
 
 
+def package_showcase_list(context):
+    return toolkit.get_action('ckanext_package_showcase_list')({}, {'package_id': context.pkg_dict['id']})
+
+
 dirname = os.path.dirname(__file__)
 CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
 FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
@@ -183,4 +187,5 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'istac_theme_get_all_groups': get_all_groups,
             'istac_theme_get_count_all_datasets': get_count_all_datasets,
+            'package_showcase_list': package_showcase_list,
         }
