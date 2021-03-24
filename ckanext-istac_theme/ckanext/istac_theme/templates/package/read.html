@@ -34,8 +34,10 @@
   {% endblock %}
 
   {% block showcase_list %}
-    {% if h.package_showcase_list(c) %}
-      {% snippet "showcase/snippets/showcase_list.html", packages=h.package_showcase_list(c), pkg_id=c.pkg_dict.name %}
+  {% set showcases = h.package_showcase_list(c) %}
+    {% if showcases %}
+      <h3>{{ _("Showcases")  }}</h3>
+      {% snippet "showcase/snippets/showcase_list.html", packages=showcases, pkg_id=c.pkg_dict.name %}
     {% endif %}
   {% endblock %}
 
