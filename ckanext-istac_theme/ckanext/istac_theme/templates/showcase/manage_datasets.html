@@ -47,7 +47,7 @@
                       <th class="table-actions">
                         <div class="btn-group">
                           <button name="bulk_action.showcase_add" value="add" class="btn" type="submit">
-                            <i class="fa fa-plus icon-plus"></i>
+                            <i class="fa fa-plus"></i>
                             {{ _('Add to Showcase') }}
                           </button>
                         </div>
@@ -57,7 +57,6 @@
                   <tbody>
                     {% for package in c.page.items %}
                       {% set truncate = truncate or 180 %}
-                      {% set truncate_title = truncate_title or 80 %}
                       {% set title = package.title or package.name %}
                       {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
                       <tr>
@@ -66,7 +65,7 @@
                         </td>
                         <td class="context">
                             <h3 class="dataset-heading">
-                                {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='dataset' if h.ckan_version().split('.')[1] | int >= 9 else 'package', action='read', id=package.name)) }}
+                                {{ h.link_to(title, h.url_for(controller='dataset' if h.ckan_version().split('.')[1] | int >= 9 else 'package', action='read', id=package.name)) }}
                             </h3>
                             {% if notes %}
                                 <p>{{ notes|urlize }}</p>
@@ -105,7 +104,7 @@
                                   <th class="table-actions">
                                       <div class="btn-group">
                                           <button name="bulk_action.showcase_remove" value="remove" class="btn btn-danger" type="submit">
-                                              <i class="fa fa-times icon-remove"></i>
+                                              <i class="fa fa-times"></i>
                                               {{ _('Remove from Showcase') }}
                                           </button>
                                       </div>
@@ -115,7 +114,6 @@
                           <tbody>
                               {% for package in c.showcase_pkgs %}
                                   {% set truncate = truncate or 180 %}
-                                  {% set truncate_title = truncate_title or 80 %}
                                   {% set title = package.title or package.name %}
                                   {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
                                   <tr>
@@ -124,7 +122,7 @@
                                       </td>
                                       <td class="context">
                                           <h3 class="dataset-heading">
-                                              {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='dataset' if h.ckan_version().split('.')[1] | int >= 9 else 'package', action='read', id=package.name)) }}
+                                              {{ h.link_to(title, h.url_for(controller='dataset' if h.ckan_version().split('.')[1] | int >= 9 else 'package', action='read', id=package.name)) }}
                         </h3>
                         {% if notes %}
                           <p>{{ notes|urlize }}</p>

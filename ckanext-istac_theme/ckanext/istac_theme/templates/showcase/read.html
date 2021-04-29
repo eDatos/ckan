@@ -89,13 +89,17 @@
     {% endblock %}
 
         {% if pkg.url %}
-            <p><a class="btn btn-primary ckanext-showcase-launch" href="{{ pkg.url }}" target="_blank"><i class="fa fa-external-link icon-external-link"></i> {{ _('Launch website') }}</a></p>
+            <p><a class="btn btn-primary ckanext-showcase-launch" href="{{ pkg.url }}" target="_blank"><i class="fa fa-external-link"></i> {{ _('Launch website') }}</a></p>
         {% endif %}
 
     {% endblock %}
 
     {% block package_tags %}
         {% snippet "showcase/snippets/tags.html", tags=pkg.tags %}
+    {% endblock %}
+
+    {% block package_info %}
+        {% snippet 'showcase/snippets/showcase_info.html', pkg=pkg, showcase_pkgs=c.showcase_pkgs %}
     {% endblock %}
 
     {% block package_search_results_list %}
@@ -106,11 +110,12 @@
 {% block secondary_content %}
     {% block secondary_help_content %}{% endblock %}
 
-    {% block package_info %}
-        {% snippet 'showcase/snippets/showcase_info.html', pkg=pkg, showcase_pkgs=c.showcase_pkgs %}
-    {% endblock %}
+        {% block secondary_content_info %}
+            {% snippet "showcase/snippets/info.html", pkg=pkg, show_nums=true %}
+        {% endblock %}
 
-    {% block package_social %}
-        {% snippet "snippets/social.html" %}
-    {% endblock %}
+        {% block package_social %}
+            {% snippet "snippets/social.html" %}
+        {% endblock %}
+        
 {% endblock %}
