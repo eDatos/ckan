@@ -33,6 +33,14 @@
     <span class="insert-comment-thread"></span>
   {% endblock %}
 
+  {% block showcase_list %}
+  {% set showcases = h.package_showcase_list(c) %}
+    {% if showcases %}
+      <h3>{{ _("Showcases")  }}</h3>
+      {% snippet "showcase/snippets/showcase_list.html", packages=showcases, pkg_id=c.pkg_dict.name %}
+    {% endif %}
+  {% endblock %}
+
   {% block package_resources %}
     {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
   {% endblock %}
