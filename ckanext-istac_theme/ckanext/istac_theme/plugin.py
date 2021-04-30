@@ -49,11 +49,16 @@ def get_count_all_datasets():
 
 
 def package_showcase_list(context):
+    '''Returns a list of showcase from a dataset
+    '''
+    showcase_list = []
     package_dict = toolkit.get_action('ckanext_package_showcase_list')(
         {}, {'package_id': context.pkg_dict['id']})
-    showcase_dict = toolkit.get_action('ckanext_showcase_show')(
-        {}, {'id': package_dict[0]['name']})
-    return [showcase_dict]
+    for package in package_dict:
+        showcase_dict = toolkit.get_action(
+            'ckanext_showcase_show')({}, {'id': package['id']})
+        showcase_list.append(showcase_dict)
+    return showcase_list
 
 
 dirname = os.path.dirname(__file__)
