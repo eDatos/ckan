@@ -49,7 +49,11 @@ def get_count_all_datasets():
 
 
 def package_showcase_list(context):
-    return toolkit.get_action('ckanext_package_showcase_list')({}, {'package_id': context.pkg_dict['id']})
+    package_dict = toolkit.get_action('ckanext_package_showcase_list')(
+        {}, {'package_id': context.pkg_dict['id']})
+    showcase_dict = toolkit.get_action('ckanext_showcase_show')(
+        {}, {'id': package_dict[0]['name']})
+    return [showcase_dict]
 
 
 dirname = os.path.dirname(__file__)
