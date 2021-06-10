@@ -4746,4 +4746,4 @@ msgstr "Este conjunto de datos no posee recursos relacionados"
 
 #: ckanext/showcase/templates/showcase/snippets/showcase_info.html:37
 msgid "Datasets in Showcase"
-msgstr "Recursos o servicios vinculados entre si"
+msgstr "Recursos o servicios vinculados entre sí"

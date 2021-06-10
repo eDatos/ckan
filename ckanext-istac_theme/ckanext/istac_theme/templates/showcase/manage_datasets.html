@@ -13,6 +13,11 @@
   <div class="container">
 
     <div class="module-content">
+
+      {% block showcase_title %}
+        <h1 class="page-heading"> {{ _('Editando') ~ " - " ~ c.pkg_dict['title'] }}</h1>
+      {% endblock %}
+
       {% set facets = {
         'fields': c.fields_grouped,
         'search': c.search_facets,
@@ -46,7 +51,7 @@
                       <th></th>
                       <th class="table-actions">
                         <div class="btn-group">
-                          <button name="bulk_action.showcase_add" value="add" class="btn" type="submit">
+                          <button name="bulk_action.showcase_add" value="add" class="btn btn-primary" type="submit">
                             <i class="fa fa-plus"></i>
                             {{ _('Add to Showcase') }}
                           </button>
