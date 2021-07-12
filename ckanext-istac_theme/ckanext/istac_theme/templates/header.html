@@ -101,6 +101,11 @@
                   {{ _('Datasets') }}
                   </a>
                 </li>
+                <li>
+                  <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                  {{ _('Showcases') }}
+                  </a>
+                </li>
               {% endblock %}
                 {% block header_account_log_out_link %}
                   <li>
@@ -124,7 +129,6 @@
                 {{ g.site_title  }}
             </a>
 
-
           {% endblock %}
             {% block header_site_navigation %}
               <nav class="navigation">
@@ -134,6 +138,11 @@
                       <li>
                         <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
                         {{ _('Datasets') }}
+                        </a>
+                      </li>
+                      <li>
+                        <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                        {{ _('Showcases') }}
                         </a>
                       </li>
                         {% endblock %}

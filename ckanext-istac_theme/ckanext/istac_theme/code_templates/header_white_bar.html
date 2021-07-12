@@ -48,6 +48,11 @@
                                     </a>
                                 </div>
                             </li>
+                            <li>
+                                <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                                {{ _('Showcases') }}
+                                </a>
+                            </li>
                         {% endblock %}
                         {% block header_account_log_out_link %}
                             <li>
@@ -74,6 +79,11 @@
                                         {{ _('Datasets') }}
                                     </a>
                                 </div>
+                            </li>
+                            <li>
+                                <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                                {{ _('Showcases') }}
+                                </a>
                             </li>
                         {% endblock %}
                         {% block header_account_log_out_link_2 %}
