@@ -4597,3 +4597,10 @@ msgstr ""
 #: ckanext/showcase/templates/showcase/new.html:8
 msgid "Create a Showcase"
 msgstr ""
+
+#: ckanext/showcase/templates/showcase/search.html:33
+msgid "Search showcases..."
+msgstr ""
+
+msgid "Datasets-home"
+msgstr ""

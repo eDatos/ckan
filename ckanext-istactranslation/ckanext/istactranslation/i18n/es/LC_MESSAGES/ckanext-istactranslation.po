@@ -4756,7 +4756,7 @@ msgstr[1] "{number} Colecciones encontradas"
 
 #: ckanext/showcase/templates/showcase/snippets/helper.html:4
 msgid "What are Showcases?"
-msgstr "Qué son las Colecciones?"
+msgstr "¿Qué son las colecciones?"
 
 #: ckanext/showcase/templates/showcase/snippets/helper.html:8
 msgid ""
@@ -4764,7 +4764,7 @@ msgid ""
 "been featured in articles, and written about in news reports and blog posts. "
 "Showcases collect together the best examples of datasets in use, to provide "
 "further insight, ideas, and inspiration."
-msgstr "Las Colecciones son agrupaciones de Conjuntos de datos relacionados entre sí."
+msgstr "Las colecciones son agrupaciones de conjuntos de datos relacionados entre sí."
 
 #: ckanext/showcase/templates/package/read_base.html:7
 #: ckanext/showcase/templates/showcase/read.html:33
@@ -4773,55 +4773,62 @@ msgstr "Recursos relacionados"
 
 #: ckanext/showcase/templates/showcase/search.html:13
 msgid "Add Showcase"
-msgstr "Agregar Colección"
+msgstr "Agregar colección"
 
 #: ckanext/showcase/templates/showcase/snippets/helper.html:12
 #, python-format
 msgid ""
 "Sysadmins can manage Showcase Admins from the <a href='%(url)s'>Showcase "
 "configuration page</a>."
-msgstr "Los administradores del sistema pueden administrar administradores de Colecciones de la <a href='%(url)s'>configuración de Colecciones</a>."
+msgstr "Los administradores del sistema pueden administrar administradores de colecciones de la <a href='%(url)s'>configuración de colecciones</a>."
 
 #: ckanext/showcase/templates/showcase/edit_base.html:41
 msgid "Edit showcase"
-msgstr "Editar Colección"
+msgstr "Editar colección"
 
 #: ckanext/showcase/templates/showcase/new_package_form.html:63
 msgid "Update Showcase"
-msgstr "Actualizar Colección"
+msgstr "Actualizar colección"
 
 #: ckanext/showcase/templates/showcase/edit_base.html:35
 msgid "View showcase"
-msgstr "Ver Colección"
+msgstr "Ver colección"
 
 #: ckanext/showcase/templates/showcase/add_datasets.html:48
 #: ckanext/showcase/templates/showcase/manage_datasets.html:51
 msgid "Add to Showcase"
-msgstr "Agregar a Colección"
+msgstr "Agregar a colección"
 
 #: ckanext/showcase/templates/showcase/manage_datasets.html:109
 msgid "Remove from Showcase"
-msgstr "Eliminar de la Colección"
+msgstr "Eliminar de la colección"
 
 #: ckanext/showcase/templates/showcase/manage_datasets.html:96
 msgid "Datasets in this showcase"
-msgstr "Conjuntos de datos en esta Colección"
+msgstr "Conjuntos de datos en esta colección"
 
 #: ckanext/showcase/templates/showcase/manage_datasets.html:140
 msgid "This showcase has no datasets associated to it"
-msgstr "Esta Colección no tiene Conjuntos de datos asociados"
+msgstr "Esta colección no tiene conjuntos de datos asociados"
 
 #: ckanext/showcase/templates/showcase/add_datasets.html:31
 #: ckanext/showcase/templates/showcase/manage_datasets.html:36
 msgid "Datasets available to add to this showcase"
-msgstr "Conjuntos de datos disponibles para agregar a esta Colección"
+msgstr "Conjuntos de datos disponibles para agregar a esta colección"
 
 #: ckanext/showcase/templates/showcase/edit_base.html:22
 #: ckanext/showcase/templates/showcase/new.html:3
 #: ckanext/showcase/templates/showcase/new_package_form.html:63
 msgid "Create Showcase"
-msgstr "Crear Colección"
+msgstr "Crear colección"
 
 #: ckanext/showcase/templates/showcase/new.html:8
 msgid "Create a Showcase"
-msgstr "Crear una Colección"
+msgstr "Crear una colección"
+
+#: ckanext/showcase/templates/showcase/search.html:33
+msgid "Search showcases..."
+msgstr "Buscando colecciones..."
+
+msgid "Datasets-home"
+msgstr "Datos"
