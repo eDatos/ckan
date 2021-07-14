@@ -154,17 +154,17 @@ a:focus {
 
 [role=main], .main {
 	background: none;
-	/*background-color: #bbc8d0;*/
-        background-color: #8098A7;
+	background-color: #8098A7;
 	padding-bottom: 80px;
 	min-height: 700px;
 }
 
 .nav-item.active > a, .nav-aside li.active a,
 .istac-app-header.istac-title-bar .account ul li a.btn-datasets {
-	/*background-color: #bbc8d0;*/
-        background-color: #8098A7;
+	background-color: #8098A7;
 	color: #FFFFFF;	
+	min-width: 90px;
+	text-align: center;
 }
 
 

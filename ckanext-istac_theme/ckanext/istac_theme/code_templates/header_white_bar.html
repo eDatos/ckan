@@ -44,9 +44,14 @@
                             <li>
                                 <div class="dataset-container">
                                     <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                        {{ _('Datasets') }}
+                                        {{ _('Datasets-home') }}
                                     </a>
                                 </div>
+                            </li>
+                            <li>
+                                <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                                {{ _('Showcases') }}
+                                </a>
                             </li>
                         {% endblock %}
                         {% block header_account_log_out_link %}
@@ -71,9 +76,14 @@
                             <li>
                                 <div class="dataset-container">
                                     <a class="btn-datasets" href="{{ h.url_for('search') }}" title="{{ _('Datasets') }}">
-                                        {{ _('Datasets') }}
+                                        {{ _('Datasets-home') }}
                                     </a>
                                 </div>
+                            </li>
+                            <li>
+                                <a class="btn-datasets" href="{{ h.url_for('/showcase') }}" title="{{ _('Showcases') }}">
+                                {{ _('Showcases') }}
+                                </a>
                             </li>
                         {% endblock %}
                         {% block header_account_log_out_link_2 %}
