@@ -62,12 +62,13 @@ def package_showcase_list(context):
 
 
 dirname = os.path.dirname(__file__)
-CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
-FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
-HEADER_PATH = os.path.join(dirname, 'templates/header.html')
+CONFIG_FILE_PATH = os.path.join(dirname, '../etc/config.json')
+FOOTER_PATH = os.path.join(dirname, '../templates/footer.html')
+HEADER_PATH = os.path.join(dirname, '../templates/header.html')
 HEADER_WHITE_BAR_PATH = os.path.join(
-    dirname, 'code_templates/header_white_bar.html')
-BURGER_BUTTON_PATH = os.path.join(dirname, 'code_templates/burger_button.html')
+    dirname, '../code_templates/header_white_bar.html')
+BURGER_BUTTON_PATH = os.path.join(
+    dirname, '../code_templates/burger_button.html')
 
 
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -78,11 +79,12 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def __get_altered_header(self, header, json_config):
         """
-        Metodo que modifica el header para hacer que contenga los botones dinamicos
-        que se generan para esta aplicacion en concreto.
+        Metodo que modifica el header para hacer que contenga los botones 
+        dinamicos que se generan para esta aplicacion en concreto.
 
         :param header: Codigo HTML del Header que se va a modificar
-        :param json_config: Fichero de configuracion cargado como un diccionario JSON
+        :param json_config: Fichero de configuracion cargado como 
+                            un diccionario JSON
         """
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
