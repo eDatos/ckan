@@ -108,7 +108,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 container.append(BeautifulSoup(code, 'html.parser'))
                 alteredHeader = soup.prettify('utf-8')
 
-        alteredHeader = alteredHeader.replace('&gt;', '>')
+        alteredHeader = alteredHeader.replace(b'&gt;', b'>').decode('utf8')
         return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
     def __get_url(self, endpoint, key):
@@ -181,16 +181,19 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 url=self.__get_footer_ulr(json_config)).content
 
             footer = footer.decode('utf-8')
-            header = header.decode('utf-8')
 
             self.__save_header(header=header)
             self.__save_footer(footer=footer)
+
+    # IConfigurer
 
     def update_config(self, config_):
         self._load_header_footer()
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'istac_theme')
+
+    # ITemplateHelpers
 
     def get_helpers(self):
         '''Register the get_all_groups function as a template helper function.
