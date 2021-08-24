@@ -52,7 +52,7 @@
         {% block resource_content %}
           {% block resource_read_title %}
 		<h1 class="page-heading">
-		  <a href="{{ h.url_for(controller='package', action='read', id=pkg.name) }}">
+		  <a href="{{ h.url_for('dataset.read', id=pkg.name) }}">
 		    {{ h.dataset_display_name(c.package) }}
 		  </a>
 		</h1>

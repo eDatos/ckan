@@ -1,11 +1,11 @@
-istactheme_css:
+istac_theme_css:
   output: ckanext-istac_theme/%(version)s_istac_theme_css.css
   contents: 
     - styles/custom.css
     - styles/subject-area-icons.css
 
-istactheme_fonts:
-  output: ckanext-istac_theme/%(version)s_istact_heme_fonts.css
+istac_theme_fonts:
+  output: ckanext-istac_theme/%(version)s_istact_theme_fonts.css
   filters: cssrewrite
   contents:
     - fonts/glyphter/css/open-sans.css

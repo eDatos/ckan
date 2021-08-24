@@ -18,7 +18,7 @@ def get_group_pagination_limit():
     de configuración etc/config.json
     """
 
-    with codecs.open(CONFIG_FILE_PATH, 'r') as json_file:
+    with codecs.open(CONFIG_FILE_PATH, 'r', encoding='utf8') as json_file:
         json_data = json.loads(json_file.read())
         # Se asume que es un número entero, en otro caso habrá que hacer cast con int()
         return json_data['metadata']['groupPaginationLimit']
@@ -189,9 +189,9 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def update_config(self, config_):
         self._load_header_footer()
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'istac_theme')
+        toolkit.add_template_directory(config_, '../templates')
+        toolkit.add_public_directory(config_, '../public')
+        toolkit.add_resource('../assets', 'ckanext-istac_theme')
 
     # ITemplateHelpers
 
