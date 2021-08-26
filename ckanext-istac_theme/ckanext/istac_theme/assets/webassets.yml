@@ -6,6 +6,5 @@ istac_theme_css:
 
 istac_theme_fonts:
   output: ckanext-istac_theme/%(version)s_istact_theme_fonts.css
-  filters: cssrewrite
   contents:
-    - fonts/glyphter/css/open-sans.css
+    - fonts/glyphter/css/Glyphter.css
