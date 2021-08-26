@@ -70,11 +70,15 @@ HEADER_WHITE_BAR_PATH = os.path.join(
 BURGER_BUTTON_PATH = os.path.join(
     dirname, '../code_templates/burger_button.html')
 
+HERE = os.path.abspath(os.path.dirname(__file__))
+I18N_DIR = os.path.join(HERE, "../i18n")
+
 
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
+
     # IConfigurer
 
     def __get_altered_header(self, header, json_config):
@@ -203,3 +207,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             'istac_theme_get_count_all_datasets': get_count_all_datasets,
             'package_showcase_list': package_showcase_list,
         }
+
+    # ITranslation
+
+    def i18n_directory(self):
+        return I18N_DIR

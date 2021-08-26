@@ -1,6 +1,6 @@
 .homepage .module-search .module-content,
 .tags {
-	background-color: #008bd0 !important;
+	background-color: #0072A2 !important;
 	opacity: 0.80;
 }
 
@@ -295,6 +295,8 @@ a:focus {
 	text-align: center;
 	color: #59656e;
 	margin: 0px;
+	padding: 15px;
+	background-color: #FFFFFF;
 }
 
 .media-view.no-border{
