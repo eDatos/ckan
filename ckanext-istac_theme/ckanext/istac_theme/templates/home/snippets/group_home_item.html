@@ -11,8 +11,7 @@ Example:
       {% endfor %}
     </ul>
 #}
-{% set type = group.type or 'group' %}
-{% set url = h.url_for(type ~ '.read', action='read', id=group.name) %}
+{% set url = h.url_for(group.type ~ '.read', id=group.name) %}
 {% block item %}
 <li class="media-item group-home-item">
   {% block item_inner %}
