@@ -362,6 +362,10 @@ div.input-prepend input:nth-child(2) {
         width: 60%;
 }
 
+input, select, textarea{
+    color: #333333;
+}
+
 .navbar-collapse.in {
     display: block !important;
 }

@@ -8,7 +8,6 @@ Example:
 {% snippet "package/snippets/info.html", pkg=pkg %}
 
 #}
-{% set counter = 1 %}
 {% block package_info %}
     {% if pkg %}
         <section class="module module-narrow">
@@ -17,9 +16,9 @@ Example:
                     <ul class="nav nav-simple">
                         {% for package in showcase_pkgs | sort(attribute='title') %}
                             {% set truncate_title = truncate_title or 80 %}
+                            {% set counter= loop.index0 + 1  %}
                             {% set title = counter ~ ". " ~ package.title or package.name %}
                             <li class="nav-item">{{ h.link_to(title, h.url_for(controller='dataset' if h.ckan_version().split('.')[1] | int >= 9 else 'package', action='read', id=package.name)) }}</li>
-                            {% set counter = counter + 1 %}
                         {% endfor %}
                     </ul>
                 {% else %}
@@ -28,4 +27,3 @@ Example:
         </section>
     {% endif %}
 {% endblock %}
-
