@@ -4499,12 +4499,10 @@ msgstr ""
 
 #: ckanext/showcase/templates/header.html:8
 #: ckanext/showcase/templates/package/dataset_showcase_list.html:3
-#: ckanext/showcase/templates/package/read_base.html:7
 #: ckanext/showcase/templates/showcase/edit_base.html:5
 #: ckanext/showcase/templates/showcase/edit_base.html:17
 #: ckanext/showcase/templates/showcase/edit_base.html:21
 #: ckanext/showcase/templates/showcase/read.html:6
-#: ckanext/showcase/templates/showcase/read.html:33
 #: ckanext/showcase/templates/showcase/search.html:4
 #: ckanext/showcase/templates/showcase/search.html:7
 msgid "Showcases"
@@ -4520,4 +4518,89 @@ msgstr ""
 
 #: ckanext/showcase/templates/showcase/snippets/showcase_info.html:37
 msgid "Datasets in Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/snippets/showcase_search_result_text.html:9
+msgid "{number} showcase found"
+msgid_plural "{number} showcases found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/showcase/templates/showcase/snippets/helper.html:4
+msgid "What are Showcases?"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/snippets/helper.html:8
+msgid ""
+"Datasets have been used to build apps, websites and visualizations. They've "
+"been featured in articles, and written about in news reports and blog posts. "
+"Showcases collect together the best examples of datasets in use, to provide "
+"further insight, ideas, and inspiration."
+msgstr ""
+
+#: ckanext/showcase/templates/package/read_base.html:7
+#: ckanext/showcase/templates/showcase/read.html:33
+msgid "Showcases-dataset"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/search.html:13
+msgid "Add Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/snippets/helper.html:12
+#, python-format
+msgid ""
+"Sysadmins can manage Showcase Admins from the <a href='%(url)s'>Showcase "
+"configuration page</a>."
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/edit_base.html:41
+msgid "Edit showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/new_package_form.html:63
+msgid "Update Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/edit_base.html:35
+msgid "View showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/add_datasets.html:48
+#: ckanext/showcase/templates/showcase/manage_datasets.html:51
+msgid "Add to Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/manage_datasets.html:109
+msgid "Remove from Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/manage_datasets.html:96
+msgid "Datasets in this showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/manage_datasets.html:140
+msgid "This showcase has no datasets associated to it"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/add_datasets.html:31
+#: ckanext/showcase/templates/showcase/manage_datasets.html:36
+msgid "Datasets available to add to this showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/edit_base.html:22
+#: ckanext/showcase/templates/showcase/new.html:3
+#: ckanext/showcase/templates/showcase/new_package_form.html:63
+msgid "Create Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/new.html:8
+msgid "Create a Showcase"
+msgstr ""
+
+#: ckanext/showcase/templates/showcase/search.html:33
+msgid "Search showcases..."
+msgstr ""
+
+msgid "Datasets-home"
 msgstr ""

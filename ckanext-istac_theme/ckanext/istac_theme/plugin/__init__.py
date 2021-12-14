@@ -18,7 +18,7 @@ def get_group_pagination_limit():
     de configuración etc/config.json
     """
 
-    with codecs.open(CONFIG_FILE_PATH, 'r') as json_file:
+    with codecs.open(CONFIG_FILE_PATH, 'r', encoding='utf8') as json_file:
         json_data = json.loads(json_file.read())
         # Se asume que es un número entero, en otro caso habrá que hacer cast con int()
         return json_data['metadata']['groupPaginationLimit']
@@ -62,27 +62,33 @@ def package_showcase_list(context):
 
 
 dirname = os.path.dirname(__file__)
-CONFIG_FILE_PATH = os.path.join(dirname, 'etc/config.json')
-FOOTER_PATH = os.path.join(dirname, 'templates/footer.html')
-HEADER_PATH = os.path.join(dirname, 'templates/header.html')
+CONFIG_FILE_PATH = os.path.join(dirname, '../etc/config.json')
+FOOTER_PATH = os.path.join(dirname, '../templates/footer.html')
+HEADER_PATH = os.path.join(dirname, '../templates/header.html')
 HEADER_WHITE_BAR_PATH = os.path.join(
-    dirname, 'code_templates/header_white_bar.html')
-BURGER_BUTTON_PATH = os.path.join(dirname, 'code_templates/burger_button.html')
+    dirname, '../code_templates/header_white_bar.html')
+BURGER_BUTTON_PATH = os.path.join(
+    dirname, '../code_templates/burger_button.html')
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+I18N_DIR = os.path.join(HERE, "../i18n")
 
 
 class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
+
     # IConfigurer
 
     def __get_altered_header(self, header, json_config):
         """
-        Metodo que modifica el header para hacer que contenga los botones dinamicos
-        que se generan para esta aplicacion en concreto.
+        Metodo que modifica el header para hacer que contenga los botones 
+        dinamicos que se generan para esta aplicacion en concreto.
 
         :param header: Codigo HTML del Header que se va a modificar
-        :param json_config: Fichero de configuracion cargado como un diccionario JSON
+        :param json_config: Fichero de configuracion cargado como 
+                            un diccionario JSON
         """
         container_class = json_config['metadata']['htmlCodeClass']
         alteredHeader = header
@@ -106,7 +112,7 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 container.append(BeautifulSoup(code, 'html.parser'))
                 alteredHeader = soup.prettify('utf-8')
 
-        alteredHeader = alteredHeader.replace('&gt;', '>')
+        alteredHeader = alteredHeader.replace(b'&gt;', b'>').decode('utf8')
         return "{% block header_wrapper %}" + alteredHeader + "{% endblock %}"
 
     def __get_url(self, endpoint, key):
@@ -179,16 +185,19 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 url=self.__get_footer_ulr(json_config)).content
 
             footer = footer.decode('utf-8')
-            header = header.decode('utf-8')
 
             self.__save_header(header=header)
             self.__save_footer(footer=footer)
 
+    # IConfigurer
+
     def update_config(self, config_):
         self._load_header_footer()
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'istac_theme')
+        toolkit.add_template_directory(config_, '../templates')
+        toolkit.add_public_directory(config_, '../public')
+        toolkit.add_resource('../assets', 'ckanext-istac_theme')
+
+    # ITemplateHelpers
 
     def get_helpers(self):
         '''Register the get_all_groups function as a template helper function.
@@ -198,3 +207,8 @@ class IstacThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
             'istac_theme_get_count_all_datasets': get_count_all_datasets,
             'package_showcase_list': package_showcase_list,
         }
+
+    # ITranslation
+
+    def i18n_directory(self):
+        return I18N_DIR

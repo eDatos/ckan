@@ -13,14 +13,14 @@
 
 {% block content_action %}
   {% if h.check_access('package_update', {'id':pkg.id }) %}
-    {% link_for _('Manage'), controller='package', action='edit', id=pkg.name, class_='btn', icon='wrench' %}
+    {% link_for _('Manage'), controller='dataset', action='edit', id=pkg.name, class_='btn', icon='wrench' %}
   {% endif %}
 {% endblock %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
-  {{ h.build_nav_icon('dataset_groups', _('Groups'), id=pkg.name) }}
-  {{ h.build_nav_icon(showcase_dataset_showcase_list_route, _('Showcases-dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon(dataset_type ~ '.read', _('Dataset'), id=pkg.id if is_activity_archive else pkg.name, icon='sitemap') }}
+  {{ h.build_nav_icon(dataset_type ~ '.groups', _('Groups'), id=pkg.id if is_activity_archive else pkg.name, icon='tags') }}
+  {{ h.build_nav_icon(showcase_dataset_showcase_list_route, _('Showcases-dataset'), id=pkg.name, icon='archive') }}
 {% endblock %}
 
 {% block primary_content_inner %}

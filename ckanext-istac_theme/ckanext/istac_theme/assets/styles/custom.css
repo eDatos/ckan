@@ -1,6 +1,6 @@
 .homepage .module-search .module-content,
 .tags {
-	background-color: #008bd0 !important;
+	background-color: #0072A2 !important;
 	opacity: 0.80;
 }
 
@@ -154,7 +154,6 @@ a:focus {
 
 [role=main], .main {
 	background: none;
-	background-color: #8098A7;
 	padding-bottom: 80px;
 	min-height: 700px;
 }
@@ -289,13 +288,15 @@ a:focus {
 	background-color:rgb(255,255,255, 0.7) !important;
 	display: flex;
 	flex-flow: wrap;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .count-all-datasets h1{
 	text-align: center;
 	color: #59656e;
 	margin: 0px;
+	padding: 15px;
+	background-color: #FFFFFF;
 }
 
 .media-view.no-border{
@@ -361,6 +362,10 @@ div.input-prepend input:nth-child(2) {
         width: 60%;
 }
 
+input, select, textarea{
+    color: #333333;
+}
+
 .navbar-collapse.in {
     display: block !important;
 }
@@ -369,12 +374,10 @@ div.input-prepend input:nth-child(2) {
 	.logo.hidden-lg-down {
         	display: none !important;
         }
-        .btn.btn-navbar {
-        	display:block;
-		/*padding: 0px 10px*/
-                position: relative;
-                left: -1rem;
-        }
+
+	#istac-app-header-content {
+		padding-top: 0px !important;
+	}
 
         .collapsable-menu {
             -webkit-transition: 0.5s;
@@ -430,10 +433,6 @@ div.input-prepend input:nth-child(2) {
 
         .btn.btn-navbar {
             display: none !important;
-        }
-        
-        #title-bar {
-            padding-top: 5rem !important;
         }
 }
 
@@ -503,7 +502,7 @@ i.fa.fa-istac-home {
 }
 
 #title-bar {
-    padding-top: 3rem;
+    padding-top: 6.5rem;
 }
 
 /*
@@ -523,4 +522,32 @@ i.fa.fa-istac-home {
 	transition: 0.1s;
         transition-property: height;
 	height: 100%;
+}
+
+.badge {
+    background-color: #0072A2 !important;
+}
+
+.istac-navbar .navbar-toggleable-lg .navbar-collapse {
+    height: 70px;
+}
+
+#istac-app-header-content {
+	padding-top: 8px;
+}
+
+.istac-title-bar .istac-app-header-title {
+    padding-top: 10px;
+}
+
+.istac-navbar .navbar-brand.logo {
+    padding: 20px 36px 10px 36px;
+}
+
+@media (max-width: 1199px) {
+
+	.istac-navbar .navbar-brand.logo,
+	.istac-navbar .istac-navbar-toggler {
+		padding: 20px 36px 10px 36px !important;
+	}
 }

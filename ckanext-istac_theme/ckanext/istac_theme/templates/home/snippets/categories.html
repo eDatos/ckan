@@ -18,7 +18,7 @@
   {% set count = h.istac_theme_get_count_all_datasets() %}
     <div class="counter-box">
      <div class="box">
-      <div class="media-grid count-all-datasets">
+      <div class="count-all-datasets">
       {% if count %}
         <h1>{{ h.localised_number(count) +' ' + _('Datasets') }}</h1>
       {% else %}
